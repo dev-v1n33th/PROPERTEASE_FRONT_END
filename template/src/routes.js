@@ -15,6 +15,7 @@ import Cover from 'layouts/authentication/reset-password/cover'
 import InNotices from 'layouts/upcomingCheckouts';
 import ArchivedGuests from 'layouts/archivedCheckouts';
 import AllTransactions from 'layouts/allTrasactions';
+import GuestReportMain from "./layouts/GuestReport/index"
 const routes = [
 	{
 		type: 'collapse',
@@ -108,6 +109,14 @@ const routes = [
 		icon: <Icon fontSize="small">Transactions</Icon>,
 		route: '/allTransactions',
 		component: <AllTransactions />
+	},
+	{
+		type: 'collapse',
+		name: 'Guest Data',
+		key: 'guestData',
+		icon: <Icon fontSize="small">GuestData</Icon>,
+		route: '/guestData',
+		component: <GuestReportMain />
 	},
 	// {
 	// 	type: 'collapse',
