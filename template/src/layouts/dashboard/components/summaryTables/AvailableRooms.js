@@ -11,28 +11,28 @@ import axios from "../../../../Uri";
 export default function AvailableRooms() {
   const columns = [
     {
-      title: "BuildingId",
+      title: "Building Name",
 
-      field: "buildingId",
+      field: "buildingName",
     },
     {
-      title: "FloorId",
+      title: "Floor Number",
 
-      field: "floorId",
+      field: "floorNumber",
     },
     {
-      title: "RoomId",
+      title: "Room Number",
 
-      field: "roomId",
+      field: "roomNumber",
     },
     {
-      title: "BedName",
+      title: "Bed Name",
 
       field: "bedName",
     },
 
     {
-      title: "BedId",
+      title: "Bed Id",
 
       field: "bedId",
 
