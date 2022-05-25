@@ -178,7 +178,9 @@ function Room() {
   }, {});
   console.log(obj1);
 
-  const obje1 = { floorId: floorId };
+  const obje1 = { floorId: floorId ,
+                  buildingId:buildingId
+                  };
   const obje = { createdBy: userId };
 
   return (
