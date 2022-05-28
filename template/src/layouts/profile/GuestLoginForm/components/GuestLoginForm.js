@@ -59,7 +59,7 @@ const INITIAL_FORM_STATE = {
   amountToBePaid: "",
   defaultRent: "",
   securityDeposit: "",
-  checkinNotes: "", 
+  checkinNotes: "",
 };
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -320,18 +320,16 @@ const GuestLoginForm = () => {
                   console.log(amountTooPay);
                   if (guestdata.amountPaid == amountTooPay) {
                     const res = axios
-                      .post(
-                        "/guest/addGuest",
-
-                        guestdata
-                      )
+                      .post("/guest/addGuest", guestdata)
+                      .then((resp) => console.log(resp.data.id))
 
                       .catch((err) => {
+                        console.log(err);
                         handleClose();
                         toast.error("Server error");
                       });
 
-                    //console.log(res.data);
+                    console.log(res);
                     if (res.data !== null) {
                       handleClose();
 
@@ -361,8 +359,7 @@ const GuestLoginForm = () => {
                           {" "}
                           * Indicates fields are Required
                         </InputLabel>
-                        <br/>
-                        
+                        <br />
                       </Grid>
                       {userType !== "manager" ? (
                         <Grid item xs={6}>
