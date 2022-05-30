@@ -251,7 +251,7 @@ function InNotice() {
   useEffect(() => {
     axios
 
-      .get("/guest/findGuestsAreInNotice/InNotice")
+      .get("/guest/getGuestAboutToCheckOut/RegulatInNotice/Daily-Monthly-ActivefindGuestsAreInNotice/InNotice")
 
       .then((res) => {
         setData(res.data);
