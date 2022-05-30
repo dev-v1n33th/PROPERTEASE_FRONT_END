@@ -135,12 +135,18 @@ function ConfigSecurityDeposit() {
                   console.log(updatedRow)
                   const index = oldRow.id;
                   console.log(index)
-                  const updatedRows = [...data];
-                  updatedRows[index] = updatedRow;
-                  if(oldRow.tableData != undefined){
+                   const updatedRows = [...data];
+                   console.log(updatedRows)
+                   updatedRows[oldRow.tableData.id] = updatedRow;
+                   console.log(updatedRows)
+                  
                     setTimeout(() => {
                       const res = axios
                         .put(`/guest/updateSecurityDeposit/${index}`, updatedRow)
+                        .then((resp)=>{
+                          console.log(resp)
+                        })
+                        
                         
                         .catch((err) => {
                           toast.error("Server error");
@@ -153,10 +159,7 @@ function ConfigSecurityDeposit() {
                     }, 2000);
                  
 
-                  }else{
-                    console.log("jhjk")
-
-                  }
+                  
                   
                 }),
             }}
