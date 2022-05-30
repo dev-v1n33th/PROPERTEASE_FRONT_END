@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import MaterialTable from "material-table";
-import { Grid, InputLabel } from "@mui/material";
+import { Grid } from "@mui/material";
 // import axios from "axios";
 import axios from "../../../Uri";
-// import Select from '../../profile/GuestLoginForm/components/Select'
-import { alpha } from "@material-ui/core/styles";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Formik, Form } from "formik";
-import Select from "../../profile/GuestLoginForm/components/Select";
-
-// import { height, width } from "@mui/system";
 
 function ConfigSecurityDeposit() {
   let userData = JSON.parse(sessionStorage.getItem("userdata"));
@@ -33,22 +28,6 @@ function ConfigSecurityDeposit() {
   }, []);
 
   const columns = [
-    // {
-    //   title: "ID",
-    //   field: "id",
-    //   editable: false,
-    //   headerStyle: {
-    //     backgroundColor: "#1E90FF",
-    //     color: "white",
-    //   },
-    //   validate: (rowData) => {
-    //     if (rowData.Id === undefined) {
-    //       return "Id is Required";
-    //     }
-    //     return true;
-    //   },
-    // },
-
     {
       title: "Occupency Type",
       field: "occupencyType",
@@ -61,14 +40,6 @@ function ConfigSecurityDeposit() {
         backgroundColor: "#1E90FF",
         color: "white",
       },
-      // validate: (rowData) => {
-      //   if (rowData.occupencyType === undefined) {
-      //     return "Occupency Type is Required";
-      //   } else if (!rowData.occupencyType.match(/[^0-9]/g)) {
-      //     return " Please enter valid Type";
-      //   }
-      //   return true;
-      // },
     },
     {
       title: "Security Deposit",
@@ -77,14 +48,6 @@ function ConfigSecurityDeposit() {
         backgroundColor: "#1E90FF",
         color: "white",
       },
-      // validate: (rowData) => {
-      //   if (rowData.securityDepositAmount === undefined) {
-      //     return "Security Deposit is Required";
-      //   } else if (!rowData.securityDepositAmount.match(/[^0-9]/g)) {
-      //     return " Please enter valid numbers";
-      //   }
-      //   return true;
-      // },
     },
   ];
 
@@ -112,12 +75,14 @@ function ConfigSecurityDeposit() {
 
                         newRow
                       )
-                      .then(() => {toast.success("New data added")})  
+                      .then(() => {
+                        toast.success("New data added");
+                      })
                       .catch((err) => {
                         toast.error("Server error");
                       });
                     console.log(newRow);
-                    
+
                     setData(updatedRows);
                     resolve();
                   }, 2000);
@@ -144,11 +109,11 @@ function ConfigSecurityDeposit() {
                         toast.error("Server error");
                       });
 
-                    toast.success(" Updated Successfully");
                     setData(updatedRows);
+                    toast.success(" Updated Successfully");
                     console.log(updatedRows);
                     resolve();
-                  }, 2000);
+                  });
                 }),
             }}
             options={{
@@ -168,6 +133,18 @@ function ConfigSecurityDeposit() {
               },
             }}
           />
+           <ToastContainer
+                      position="top-right"
+                      min-width="2%"
+                      autoClose={3000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                    />
         </Grid>
       </Grid>
     </>
