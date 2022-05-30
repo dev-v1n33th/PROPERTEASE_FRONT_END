@@ -16,6 +16,8 @@ import InNotices from 'layouts/upcomingCheckouts';
 import ArchivedGuests from 'layouts/archivedCheckouts';
 import AllTransactions from 'layouts/allTrasactions';
 import GuestReportMain from "./layouts/GuestReport/index"
+import ConfigSecurityDeposit from "./layouts/cofigSecurityDeposit/Components/ConfigSecurityDeposit"
+import ConfigSecurityDeposits from 'layouts/cofigSecurityDeposit/Components';
 const routes = [
 	{
 		type: 'collapse',
@@ -118,6 +120,14 @@ const routes = [
 		route: '/guestData',
 		component: <GuestReportMain />
 	},
+	{
+		type: 'collapse',
+		name: 'Config Security Deposit',
+		key:'configSecurityDeposit',
+		icon:<Icon fontSize="small">CofigSecurityDeposit</Icon>,
+		route:'/configSecurityDeposit',
+		component:<ConfigSecurityDeposits />
+	},
 	// {
 	// 	type: 'collapse',
 	// 	name: 'BulkImport',
@@ -187,6 +197,7 @@ const routes = [
 		component:<BuildingsTracker buildingName = "SREE_NILAYAM"/>
 	}
 
+	
 	
 	
 	
