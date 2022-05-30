@@ -692,7 +692,7 @@ const GuestLoginForm = () => {
 
                       <Grid item xs={12}>
                         <h6>Guest Picture</h6>
-                        <Textfield
+                        {/* <Textfield
                           name="guestPicture"
                           type="file"
                         //  onClick={choose}
@@ -700,6 +700,9 @@ const GuestLoginForm = () => {
                           // label="Address Line 1"
                           required
                         />
+
+ */}
+                <input type="file" onChange={handleChooseGuestPicture} />
 
                       </Grid>
                       <Grid item xs={12} />
