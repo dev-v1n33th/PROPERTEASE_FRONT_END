@@ -16,6 +16,7 @@ import HotelOutlinedIcon from "@mui/icons-material/HotelOutlined";
 // import MDButton from "components/MDButton";
 // import axios from 'axios';
 import axios from "../../../../Uri";
+import { Image } from "react-bootstrap";
 import GuestPopUp from "../GuestPopUp/guestPopUP";
 // import { setOpenConfigurator } from "context";
 import "./buildingLayout.css";
@@ -130,140 +131,137 @@ const BuildingsLayout = (props) => {
                                                     />
                                                   );
                                                 }
-                                                else if (bdno.guestStatus == "InNotice") {
+                                                // else if (bdno.guestStatus == "InNotice") {
 
-                                                  return (
-                                                    <Tooltip
-                                                      title={bdno.guestName}
-                                                    >
-                                                      <HotelOutlinedIcon
-                                                        key={bdno.bedId}
-                                                        color="warning"
-                                                        className="click"
-                                                        id={bdno.guestId}
-                                                        onClick={async () => {
-                                                          setLoading(false);
-                                                          GuestId = bdno.guestId
-                                                          console.log(
-                                                            bdno.guestId
-                                                          );
-                                                          // totalAmountPaidByGuest()
+                                                //   return (
+                                                //     <Tooltip
+                                                //       title={bdno.guestName}
+                                                //     >
+                                                //       <HotelOutlinedIcon
+                                                //         key={bdno.bedId}
+                                                //         color="warning"
+                                                //         className="click"
+                                                //         id={bdno.guestId}
+                                                //         onClick={async () => {
+                                                //           setLoading(false);
+                                                //           GuestId = bdno.guestId
+                                                //           console.log(
+                                                //             bdno.guestId
+                                                //           );
+                                                //           totalAmountPaidByGuest()
 
-                                                          await axios
-                                                            .get(`guest/getTotalPaid/${bdno.guestId}`)
-                                                            .then((response) =>
-                                                              (TotalAmountByGuest = response.data)
-                                                            );
-                                                          console.log(
-                                                            TotalAmountByGuest
-                                                          );
+                                                //           await axios
+                                                //             .get(`guest/getTotalPaid/${bdno.guestId}`)
+                                                //             .then((response) =>
+                                                //               (TotalAmountByGuest = response.data)
+                                                //             );
+                                                //           console.log(
+                                                //             TotalAmountByGuest
+                                                //           );
 
-                                                          await axios
-                                                            .get(
-                                                              `guest/onClickDues/${bdno.guestId}`
-                                                            )
-                                                            .then(
-                                                              (response) =>
-                                                              (GuestDueAmount =
-                                                                response.data)
-                                                            );
-                                                          console.log(
-                                                            GuestDueAmount
-                                                          );
+                                                //           await axios
+                                                //             .get(
+                                                //               `guest/onClickDues/${bdno.guestId}`
+                                                //             )
+                                                //             .then(
+                                                //               (response) =>
+                                                //               (GuestDueAmount =
+                                                //                 response.data)
+                                                //             );
+                                                //           console.log(
+                                                //             GuestDueAmount
+                                                //           );
 
-                                                          await axios
-                                                            .get(
-                                                              `/guest/getGuestByGuestId/${bdno.guestId}`
-                                                            )
-                                                            .then((res) => {
-                                                              GuestDetails =
-                                                                res.data;
-                                                              console.log(
-                                                                GuestDetails
-                                                              );
+                                                //           await axios
+                                                //             .get(
+                                                //               `/guest/getGuestByGuestId/${bdno.guestId}`
+                                                //             )
+                                                //             .then((res) => {
+                                                //               GuestDetails =
+                                                //                 res.data;
+                                                //               console.log(
+                                                //                 GuestDetails
+                                                //               );
 
-                                                              setOpen(true);
-                                                              setLoading(true);
-                                                            })
-                                                            .catch((err) => {
-                                                              console.log(err);
-                                                            });
+                                                //               setOpen(true);
+                                                //               setLoading(true);
+                                                //             })
+                                                //             .catch((err) => {
+                                                //               console.log(err);
+                                                //             });
 
-                                                          // await axios .get(`guest/getPendingAndCompletedById/${bdno.guestId}`)
-                                                          // .then((res) => {
-                                                          //   GuestDueAmount = res.data;
-                                                          //   console.log(GuestDueAmount)
+                                                //           await axios .get(`guest/getPendingAndCompletedById/${bdno.guestId}`)
+                                                //           .then((res) => {
+                                                //             GuestDueAmount = res.data;
+                                                //             console.log(GuestDueAmount)
 
-                                                          // })
-                                                        }}
-                                                      />
-                                                    </Tooltip>
-                                                  );
-                                                }
+                                                //           })
+                                                //         }}
+                                                //       />
+                                                //     </Tooltip>
+                                                //   );
+                                                // }
                                                 else {
                                                   return (
                                                     <Tooltip
                                                       title={bdno.guestName}
                                                     >
-                                                      <HotelOutlinedIcon
-                                                        key={bdno.bedId}
-                                                        color="error"
-                                                        className="click"
-                                                        id={bdno.guestId}
-                                                        onClick={async () => {
-                                                          setLoading(false);
-                                                          console.log(
-                                                            bdno.guestId
-                                                          );
-                                                          // totalAmountPaidByGuest
+                                                      <Image className="click" src={bdno.url} height={30} width= {30}
+                                                      onClick={async () => {
+                                                        setLoading(false);
+                                                        console.log(
+                                                          bdno.guestId
+                                                        );
+                                                        // totalAmountPaidByGuest
 
-                                                          await axios
-                                                            .get(`guest/getTotalPaid/${bdno.guestId}`)
-                                                            .then((response) =>
-                                                              (TotalAmountByGuest = response.data)
+                                                        await axios
+                                                          .get(`guest/getTotalPaid/${bdno.guestId}`)
+                                                          .then((response) =>
+                                                            (TotalAmountByGuest = response.data)
+                                                          );
+                                                        console.log(
+                                                          TotalAmountByGuest
+                                                        );
+                                                        await axios
+                                                          .get(
+                                                            `guest/onClickDues/${bdno.guestId}`
+                                                          )
+                                                          .then(
+                                                            (response) =>
+                                                            (GuestDueAmount =
+                                                              response.data)
+                                                          );
+                                                        console.log(
+                                                          GuestDueAmount
+                                                        );
+
+                                                        await axios
+                                                          .get(
+                                                            `/guest/getGuestByGuestId/${bdno.guestId}`
+                                                          )
+                                                          .then((res) => {
+                                                            GuestDetails =
+                                                              res.data;
+                                                            console.log(
+                                                              GuestDetails
                                                             );
-                                                          console.log(
-                                                            TotalAmountByGuest
-                                                          );
-                                                          await axios
-                                                            .get(
-                                                              `guest/onClickDues/${bdno.guestId}`
-                                                            )
-                                                            .then(
-                                                              (response) =>
-                                                              (GuestDueAmount =
-                                                                response.data)
-                                                            );
-                                                          console.log(
-                                                            GuestDueAmount
-                                                          );
 
-                                                          await axios
-                                                            .get(
-                                                              `/guest/getGuestByGuestId/${bdno.guestId}`
-                                                            )
-                                                            .then((res) => {
-                                                              GuestDetails =
-                                                                res.data;
-                                                              console.log(
-                                                                GuestDetails
-                                                              );
+                                                            setOpen(true);
+                                                            setLoading(true);
+                                                          })
+                                                          .catch((err) => {
+                                                            console.log(err);
+                                                          });
 
-                                                              setOpen(true);
-                                                              setLoading(true);
-                                                            })
-                                                            .catch((err) => {
-                                                              console.log(err);
-                                                            });
+                                                        // await axios .get(`guest/getPendingAndCompletedById/${bdno.guestId}`)
+                                                        // .then((res) => {
+                                                        //   GuestDueAmount = res.data;
+                                                        //   console.log(GuestDueAmount)
 
-                                                          // await axios .get(`guest/getPendingAndCompletedById/${bdno.guestId}`)
-                                                          // .then((res) => {
-                                                          //   GuestDueAmount = res.data;
-                                                          //   console.log(GuestDueAmount)
+                                                        // })
+                                                      }}
+                                                       />
 
-                                                          // })
-                                                        }}
-                                                      />
                                                     </Tooltip>
                                                   );
                                                 }

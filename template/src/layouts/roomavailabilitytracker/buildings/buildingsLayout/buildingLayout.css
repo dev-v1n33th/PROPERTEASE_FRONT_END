@@ -1,7 +1,9 @@
 .click {
     
         cursor: pointer;
+        border-radius: 25px;
     }
+
 /* .click:hover {
            opacity: 0.3;
         } */
