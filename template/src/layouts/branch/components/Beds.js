@@ -144,23 +144,23 @@ function Beds() {
         return true;
       },
     },
-    {
-      title: "Security Deposit",
-      field: "securityDeposit",
-      headerStyle: {
-        backgroundColor: "#1E90FF",
-        color: "white",
-      },
-      validate: (rowData) => {
-        if (rowData.securityDeposit === undefined) {
-          return "Security Deposit is Required";
-        }
-        //  else if (rowData.securityDeposit.match(/[^0-9]/g)) {
-        //   return " Please enter valid numbers";
-        // }
-        return true;
-      },
-    },
+    // {
+    //   title: "Security Deposit",
+    //   field: "securityDeposit",
+    //   headerStyle: {
+    //     backgroundColor: "#1E90FF",
+    //     color: "white",
+    //   },
+    //   validate: (rowData) => {
+    //     if (rowData.securityDeposit === undefined) {
+    //       return "Security Deposit is Required";
+    //     }
+    //     //  else if (rowData.securityDeposit.match(/[^0-9]/g)) {
+    //     //   return " Please enter valid numbers";
+    //     // }
+    //     return true;
+    //   },
+    // },
     {
       title: "Room Type",
       field: "ac",
