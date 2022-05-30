@@ -125,7 +125,7 @@ const routes = [
 		name: 'Config Security Deposit',
 		key:'configSecurityDeposit',
 		icon:<Icon fontSize="small">CofigSecurityDeposit</Icon>,
-		route:'/configSecurityDeposit',
+		route:'/configure',
 		component:<ConfigSecurityDeposits />
 	},
 	// {
