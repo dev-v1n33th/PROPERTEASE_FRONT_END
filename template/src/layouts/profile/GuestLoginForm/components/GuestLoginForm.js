@@ -370,18 +370,6 @@ const GuestLoginForm = () => {
                     // });
 
                     //console.log(res);
-
-                     axios
-                      .post("/guest/addGuest", guestdata)
-                      .then((resp) => console.log(resp.data.id))
-
-                      .catch((err) => {
-                        console.log(err);
-                        handleClose();
-                        toast.error("Server error");
-                      });
-
-                    console.log(res);
                     if (res.data !== null) {
 
                       handleClose();
@@ -414,6 +402,7 @@ const GuestLoginForm = () => {
                           * Indicates fields are Required
                         </InputLabel>
                         <br />
+
                       </Grid>
                       {userType !== "manager" ? (
                         <Grid item xs={6}>
@@ -674,7 +663,7 @@ const GuestLoginForm = () => {
                         <Textfield
                           name="guestPicture"
                           type="file"
-                        // onClick={choose}
+                        //  onClick={choose}
                           onChange={handleChooseGuestPicture}
                           // label="Address Line 1"
                           required
