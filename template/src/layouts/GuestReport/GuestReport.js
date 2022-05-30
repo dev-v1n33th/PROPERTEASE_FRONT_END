@@ -117,7 +117,7 @@ function GuestReport() {
     useEffect(() => {
         axios
 
-            .get("/guest/getAllGuests")
+            .get("/guest/getAllGuests/id")
 
             .then((res) => {
                 setData(res.data);
