@@ -55,11 +55,12 @@ const INITIAL_FORM_STATE = {
   pincode: "",
   city: "",
   state: "",
+  guestPicture: "",
   // createdBy:
   amountToBePaid: "",
   defaultRent: "",
   securityDeposit: "",
-  checkinNotes: "", 
+  checkinNotes: "",
 };
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -154,7 +155,9 @@ const GuestLoginForm = () => {
   const [amt, setAmt] = React.useState([]);
   const [secureDepo, setSecureDepo] = React.useState([]);
   const [buildId, setBuildId] = React.useState("");
+  const [file, setFile] = useState()
   const [open, setOpen] = React.useState(false);
+  // const [gid, setGid] = React.useState('')
   const handleClose = () => {
     setOpen(false);
   };
@@ -171,6 +174,7 @@ const GuestLoginForm = () => {
   let userBuildingId = userData.data.buildingId;
   let userType = userData.data.userType;
   var userID = userData.data.userId;
+  var gid = null;
   useEffect(() => {
     axios
 
@@ -208,7 +212,7 @@ const GuestLoginForm = () => {
 
     return acc;
   }, {});
-  console.log(obje1);
+  //console.log(obje1);
 
   const notify = () => toast();
 
@@ -288,22 +292,26 @@ const GuestLoginForm = () => {
   const obj2 = { amountToBePaid: amountTooPay };
   const obj3 = { paymentPurpose: OnBoarding };
   const obj5 = { buildingId: buildId };
-  const amountNeedToPay = (n) => {};
+  const amountNeedToPay = (n) => { };
   const navigate = useNavigate();
   // const refreshPage = () => {
   //   window.location.reload();
   // };
-
+  function handleChooseGuestPicture(event) {
+    setFile(event.target.files[0])
+    console.log(event.target.files[0])
+}
   return (
     <div>
       <Grid container onClick={handleClose}>
         <Grid item xs={12}>
           <Container maxWidth="md">
             <div>
+            
               <Formik
                 initialValues={{ ...INITIAL_FORM_STATE }}
                 validationSchema={FORM_VALIDATION}
-                onSubmit={(guest, { resetForm }) => {
+                onSubmit={async (guest, { resetForm }) => {
                   handleToggle();
 
                   const gustes = Object.assign(guest, obj);
@@ -318,21 +326,52 @@ const GuestLoginForm = () => {
                   console.log(guestdata);
                   console.log(gusting.amountPaid);
                   console.log(amountTooPay);
+
+                  
+            
                   if (guestdata.amountPaid == amountTooPay) {
-                    const res = axios
-                      .post(
-                        "/guest/addGuest",
+                    const res = await axios.post("/guest/addGuest", guestdata)
+                    console.log(res)
+                    if (res.status === 200) {
 
-                        guestdata
-                      )
+                      console.log(res.data)
+                      console.log(res.data.id)
+                      console.log(guestdata.guestPicture)
+                      const url = `http://localhost:7000/guest/upload/${res.data.id}/`;
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      formData.append('fileName', file.name);
+                      //formData.append('guestId', res.data.id);
+                      const config = {
+                        headers: {
+                          'content-type': 'multipart/form-data',
+                        },
+                      };
+                      console.log(formData);
+                      console.log(config);
+                      axios.post(url, formData, config)
+                        .then((response) => {
+                          console.log(response.data);
 
-                      .catch((err) => {
-                        handleClose();
-                        toast.error("Server error");
-                      });
 
-                    //console.log(res.data);
+                        }).catch((error) => {
+                          console.log(error);
+                          console.log("Not uploaded")
+                        })
+
+                    } else {
+                      console.log("ishbjzn")
+                    }
+
+                    // .catch((err) => {
+                    //   console.log(err.message)
+                    //   handleClose();
+                    //   toast.error("Server error");
+                    // });
+
+                    //console.log(res);
                     if (res.data !== null) {
+
                       handleClose();
 
                       toast.success("OnBoarded Successfully");
@@ -350,6 +389,7 @@ const GuestLoginForm = () => {
               >
                 {(formProps) => (
                   <Form>
+                    
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <Typography>
@@ -361,8 +401,8 @@ const GuestLoginForm = () => {
                           {" "}
                           * Indicates fields are Required
                         </InputLabel>
-                        <br/>
-                        
+                        <br />
+
                       </Grid>
                       {userType !== "manager" ? (
                         <Grid item xs={6}>
@@ -431,10 +471,7 @@ const GuestLoginForm = () => {
 
                       {occtype === "Daily" || occtype === "Monthly" ? (
                         <Grid item xs={6}>
-                          {/* <InputLabel id="demo-simple-select-labe">
-                            {" "}
-                            Duration
-                          </InputLabel> */}
+                         
                           <h6>Duration*</h6>
                           <Select
                             IconComponent={() => (
@@ -563,21 +600,21 @@ const GuestLoginForm = () => {
                         <h6>Secondary Phone</h6>
                         <Textfield
                           name="secondaryPhoneNumber"
-                          //label="Secondary Phone"
+                        //label="Secondary Phone"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Father's Name</h6>
                         <Textfield
                           name="fatherName"
-                          //label="Father's Name"
+                        //label="Father's Name"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Father's Phone</h6>
                         <Textfield
                           name="fatherNumber"
-                          //label="Father's Phone"
+                        //label="Father's Phone"
                         />
                       </Grid>
 
@@ -585,14 +622,14 @@ const GuestLoginForm = () => {
                         <h6>Blood Group</h6>
                         <Textfield
                           name="bloodGroup"
-                          //label="Blood Group"
+                        //label="Blood Group"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Occupation</h6>
                         <Textfield
                           name="occupation"
-                          //label="Occupation"
+                        //label="Occupation"
                         />
                       </Grid>
                       <br />
@@ -621,6 +658,18 @@ const GuestLoginForm = () => {
                         />
                       </Grid>
 
+                      <Grid item xs={12}>
+                        <h6>Guest Picture</h6>
+                        <Textfield
+                          name="guestPicture"
+                          type="file"
+                        // onClick={choose}
+                          onChange={handleChooseGuestPicture}
+                          // label="Address Line 1"
+                          required
+                        />
+
+                      </Grid>
                       <Grid item xs={12} />
 
                       <Grid item xs={12}>
@@ -643,7 +692,7 @@ const GuestLoginForm = () => {
                         <h6>Address Line 2</h6>
                         <Textfield
                           name="addressLine2"
-                          //label="Address Line 2"
+                        //label="Address Line 2"
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -709,6 +758,7 @@ const GuestLoginForm = () => {
                   </Form>
                 )}
               </Formik>
+              {/* <input type="file" onChange={handleChange} /> */}
             </div>
           </Container>
         </Grid>
