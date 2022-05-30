@@ -175,6 +175,15 @@ const GuestLoginForm = () => {
   let userType = userData.data.userType;
   var userID = userData.data.userId;
   var gid = null;
+  // useEffect(()=>{
+  //   axios.get("guest/getSecurityDepositByOccupencyType/Regular")
+  //   .then((rse)=> setSecureDepo(rse.data.securityDepositAmount))
+  // })
+  function securityDepoist(){
+    axios.get("guest/getSecurityDepositByOccupencyType/Regular")
+      .then((rse)=>console.log(rse.data.securityDepositAmount))
+
+  }
   useEffect(() => {
     axios
 
@@ -240,6 +249,7 @@ const GuestLoginForm = () => {
   });
 
   const selectBed = (e) => {
+    securityDepoist()
     setBed(e.target.outerText);
 
     const bedRent = availableBeds.filter(
@@ -249,24 +259,48 @@ const GuestLoginForm = () => {
     bedRent.map((post) => {
       setRent(post.defaultRent);
       setDefaultRentofBed(post.defaultRent);
-      setSecureDepo(post.securityDeposit);
+     // setSecureDepo(post.securityDeposit);
     });
   };
   const occupency = (i) => {
+
+    axios.get(`guest/getSecurityDepositByOccupencyType/${i.target.outerText}`)
+      .then((rse)=>{
+        setSecureDepo(rse.data.securityDepositAmount)
+        console.log(rse.data.securityDepositAmount)
+        if(i.target.outerText == "Daily"){
+          setDuration(days);
+          var checkInAmount = amt * (defaultRentofBed + rse.data.securityDepositAmount);
+          setAmountToPay(checkInAmount)
+        }
+        else if(i.target.outerText == "Monthly"){
+          setDuration(months);
+          var checkInAmount =  (defaultRentofBed + rse.data.securityDepositAmount);
+          setAmountToPay(checkInAmount)
+        }
+        else {
+          setDuration(empty);
+          var checkInAmount = (defaultRentofBed + rse.data.securityDepositAmount);
+          setAmountToPay(checkInAmount)
+        }
+
+      })
+     
     setOcctype(i.target.outerText);
-    if (i.target.outerText == "Daily") {
-      setDuration(days);
-      var checkInAmount = amt * (defaultRentofBed / 30);
-      setAmountToPay(checkInAmount.toFixed(0));
-    } else if (i.target.outerText == "Monthly") {
-      setOcctype(i.target.outerText);
-      setDuration(months);
-      var checkInAmount = amt * defaultRentofBed;
-      setAmountToPay(checkInAmount);
-    } else {
-      setDuration(empty);
-      setAmountToPay(defaultRentofBed + secureDepo);
-    }
+
+    // if (i.target.outerText == "Daily") {
+    //   setDuration(days);
+    //   var checkInAmount = amt * (defaultRentofBed / 30);
+    //   setAmountToPay(checkInAmount.toFixed(0));
+    // } else if (i.target.outerText == "Monthly") {
+    //   setOcctype(i.target.outerText);
+    //   setDuration(months);
+    //   var checkInAmount = amt * defaultRentofBed;
+    //   setAmountToPay(checkInAmount);
+    // } else {
+    //   setDuration(empty);
+    //   setAmountToPay(defaultRentofBed + secureDepo);
+    // }
   };
 
   const calculateCheckAmount = (a) => {
@@ -274,10 +308,10 @@ const GuestLoginForm = () => {
     setAmt(a.target.outerText);
 
     if (occupencyTypeis == 12) {
-      var checkInAmount = a.target.outerText * defaultRentofBed;
+      var checkInAmount = a.target.outerText * defaultRentofBed +secureDepo;
       setAmountToPay(checkInAmount);
     } else if (occupencyTypeis == 15) {
-      var checkInAmount = a.target.outerText * (defaultRentofBed / 30);
+      var checkInAmount = (a.target.outerText * (defaultRentofBed / 30))+secureDepo;
       setAmountToPay(checkInAmount.toFixed(0));
     } else {
       setAmountToPay(defaultRentofBed + secureDepo);
@@ -484,13 +518,11 @@ const GuestLoginForm = () => {
                           />
                         </Grid>
                       ) : (
-                        console.log("")
+                        <Grid item xs={6}></Grid>
                       )}
 
-                      <Grid item xs={6}></Grid>
-                      {occtype === "Daily" || occtype === "Monthly" ? (
-                        console.log("")
-                      ) : (
+                     
+                      
                         <Grid item xs={6}>
                           <h6>Security Deposit</h6>
                           <Textfield
@@ -499,7 +531,7 @@ const GuestLoginForm = () => {
                             value={secureDepo}
                           />
                         </Grid>
-                      )}
+                      
 
                       <Grid item xs={6}></Grid>
                       <Grid item xs={6}>
