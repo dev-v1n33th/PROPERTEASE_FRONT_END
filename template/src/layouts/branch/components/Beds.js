@@ -377,8 +377,17 @@ function Beds() {
                   updatedRows.splice(index, 1);
                   setTimeout(() => {
                     const res = axios.delete(`/bed/deleteBed/${index}`)
-                                     .then((res) =>{toast.success("Bed deleted Successfully")});
-                    // console.log(res);
+                                     .then((res) => {
+                                       console.log(res)
+                                      if(res.data === "Action Failed: Bed contains Guest")
+                                      // console.log("heeeeeeeeeeeeeeeeeiiiiii")
+                                     { 
+                                     toast.error("Bed can't be deletes as it contains Guest")}
+                                    else{ 
+                                      toast.success("Bed deleted successfully")
+                                    }
+                                  });
+                    console.log(res);
                     // console.log(updatedRows);
                     setData(updatedRows);
                     resolve();
