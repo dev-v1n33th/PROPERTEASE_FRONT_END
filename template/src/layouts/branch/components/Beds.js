@@ -62,12 +62,12 @@ function Beds() {
         backgroundColor: "#1E90FF",
         color: "white",
       },
-      validate: (rowData) => {
-        if (rowData.bedId === undefined) {
-          return "Bed Id is Required";
-        }
-        return true;
-      },
+      // validate: (rowData) => {
+      //   if (rowData.bedId === undefined) {
+      //     return "Bed Id is Required";
+      //   }
+      //   return true;
+      // },
     },
     // {
     //   title: "Room ID",
@@ -137,9 +137,10 @@ function Beds() {
       validate: (rowData) => {
         if (rowData.defaultRent === undefined) {
           return "Default Rent is Required";
-        } else if (rowData.defaultRent.match(/[^0-9]/g)) {
-          return " Please enter valid number";
         }
+        //  else if (rowData.defaultRent.match(/[^0-9]/g)) {
+        //   return " Please enter valid number";
+        // }
         return true;
       },
     },
@@ -153,9 +154,10 @@ function Beds() {
       validate: (rowData) => {
         if (rowData.securityDeposit === undefined) {
           return "Security Deposit is Required";
-        } else if (rowData.securityDeposit.match(/[^0-9]/g)) {
-          return " Please enter valid numbers";
         }
+        //  else if (rowData.securityDeposit.match(/[^0-9]/g)) {
+        //   return " Please enter valid numbers";
+        // }
         return true;
       },
     },
@@ -322,7 +324,7 @@ function Beds() {
                     ...data,
                     { id: Math.floor(Math.random() * 100), ...newRow },
                   ];
-                  console.log(buildingId);
+                  // console.log(buildingId);
                   if(buildingId && floorId && roomId){
                     setTimeout(() => {
                       const newRow1 = Object.assign(newRow, obje);
@@ -337,7 +339,7 @@ function Beds() {
                         .catch((err) => {
                           toast.error("Server error");
                         });
-                      console.log(newRow3);
+                      // console.log(newRow3);
   
                       toast.success("New Bed added");
   
@@ -349,6 +351,38 @@ function Beds() {
                   else{
                     toast.error("Please select Building, Floor/Room to proceed.");                  }
                     
+                }),
+                onRowUpdate: (updatedRow, oldRow) =>
+                  new Promise((resolve, reject) => {
+                    const index = oldRow.id;
+                    const updatedRows = [...data];
+                    updatedRows[index] = updatedRow;
+                    setTimeout(() => {
+                      const res = axios
+                        .put(`/bed/updateBedById/${index}`, updatedRow)
+                        .then((res)=>{toast.success("Bed updated Successfully");})
+                        .catch((err) => {
+                          toast.error("Server error");
+                        });
+  
+                      
+                      setData(updatedRows);
+                      resolve();
+                    }, 2000);
+                  }),
+                  onRowDelete: (selectedRow) =>
+                new Promise((resolve, reject) => {
+                  const index = selectedRow.id;
+                  const updatedRows = [...data];
+                  updatedRows.splice(index, 1);
+                  setTimeout(() => {
+                    const res = axios.delete(`/bed/deleteBed/${index}`)
+                                     .then((res) =>{toast.success("Bed deleted Successfully")});
+                    // console.log(res);
+                    // console.log(updatedRows);
+                    setData(updatedRows);
+                    resolve();
+                  }, 2000);
                 }),
               
             }}

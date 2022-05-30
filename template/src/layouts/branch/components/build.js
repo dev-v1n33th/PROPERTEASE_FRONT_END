@@ -183,7 +183,7 @@ function Build() {
 
                     const res = axios
                       .post(
-                        "/guest/addSecurityDeposit",
+                        "/bed/addBuilding",
 
                         newRow1
                       )

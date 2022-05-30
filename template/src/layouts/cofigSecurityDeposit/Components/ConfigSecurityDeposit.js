@@ -112,11 +112,12 @@ function ConfigSecurityDeposit() {
 
                         newRow
                       )
+                      .then(() => {toast.success("New data added")})  
                       .catch((err) => {
                         toast.error("Server error");
                       });
                     console.log(newRow);
-                    toast.success("New data added");
+                    
                     setData(updatedRows);
                     resolve();
                   }, 2000);
