@@ -269,19 +269,26 @@ function Room() {
                     }
                   }),
 
-                // onRowDelete: (selectedRow) =>
-                //   new Promise((resolve, reject) => {
-                //     const index = selectedRow.buildingId;
-                //     const updatedRows = [...data];
-                //     updatedRows.splice(index, 1);
-                //     setTimeout(() => {
-                //       const res = axios.delete(`/bed/deleteBuilding/${index}`);
-                //       // console.log(res);
-                //       // console.log(updatedRows);
-                //       setData(updatedRows);
-                //       resolve();
-                //     }, 2000);
-                //   }),
+                  onRowDelete: (selectedRow) =>
+                  new Promise((resolve, reject) => {
+                    const index = selectedRow.roomId;
+                    const updatedRows = [...data];
+                    updatedRows.splice(index, 1);
+                    setTimeout(() => {
+                      const res = axios.delete(`/bed//deleteRoom/${index}`)
+                                       .then((res) =>{
+                                       console.log(res)
+                                       if(res.data ==="Action Failed:This Room Contains Beds")
+                                       {toast.error("Room can't be deleted as it contains Beds")}
+                                      else{
+                                        toast.success("Room deleted successfully")
+                                      }});
+                      
+                      // console.log(updatedRows);
+                      setData(updatedRows);
+                      resolve();
+                    }, 2000);
+                  }),
                 // onRowUpdate: (updatedRow, oldRow) =>
                 //   new Promise((resolve, reject) => {
                 //     const index = oldRow.buildingId;
