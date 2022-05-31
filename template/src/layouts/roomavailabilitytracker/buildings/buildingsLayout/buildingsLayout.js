@@ -28,6 +28,8 @@ var GuestDetails = {};
 var GuestDueAmount = null;
 var TotalAmountByGuest = null;
 var GuestId = null;
+var GuestPicUrl = "";
+var GuestPic = null;
 
 const BuildingsLayout = (props) => {
   // console.log(props.buildingId)
@@ -84,6 +86,9 @@ const BuildingsLayout = (props) => {
                   GuestDetails={GuestDetails}
                   GuestDueAmount={GuestDueAmount}
                   TotalAmountByGuest={TotalAmountByGuest}
+                  // GuestPicUrl={GuestPicUrl}
+                  GuestPic={GuestPic}
+                  
                 />
 
                 <Grid container spacing={2}>
@@ -253,13 +258,41 @@ const BuildingsLayout = (props) => {
                                                             console.log(err);
                                                           });
 
-                                                        // await axios .get(`guest/getPendingAndCompletedById/${bdno.guestId}`)
-                                                        // .then((res) => {
-                                                        //   GuestDueAmount = res.data;
-                                                        //   console.log(GuestDueAmount)
+                                                          // await axios
+                                                          // .get(
+                                                          //   `/guest/files/${bdno.guestId}`
+                                                          // )
+                                                          // .then((res) => {
+                                                          //   console.log(res);
+                                                          //   GuestPicUrl = res.data.;
+                                                          //   console.log(GuestPicUrl)
+                                                           
 
-                                                        // })
+                                                          // })
+                                                          // .catch((err) => {
+                                                          //   console.log(err);
+                                                          // });
+
+                                                          // await axios
+                                                          // .get(GuestPicUrl
+                                                            
+                                                          // )
+                                                          // .then((res) => {
+                                                          //   // console.log(res);
+                                                          //   GuestPic=res;
+                                                           
+                                                          //   console.log(res)
+                                                           
+
+                                                          // })
+                                                          // .catch((err) => {
+                                                          //   console.log(err);
+                                                          // });
+
+                                                       
                                                       }}
+
+                                                      
                                                        />
 
                                                     </Tooltip>

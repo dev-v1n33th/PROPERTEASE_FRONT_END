@@ -43,7 +43,7 @@ function Guestdetails(props) {
   var s = props.guestdetails.plannedCheckOutDate.toLocaleString("ko-KR", {
     timeZone: "Asia/Kolkata",
   });
-  console.log(s);
+  // console.log(s);
   var da = formatDate(s)
   function createData(name, calories) {
     return { name, calories };
@@ -72,8 +72,8 @@ function Guestdetails(props) {
 
   ]
 
- console.log('this is DOM guy')
- console.log(props.TotalAmountByGuest)
+//  console.log('this is DOM guy')
+//  console.log(props.TotalAmountByGuest)
   return (
     <Grid container spacing={2} columns={16}>
     <Grid item xs={8}>

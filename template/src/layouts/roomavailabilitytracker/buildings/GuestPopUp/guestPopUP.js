@@ -21,11 +21,14 @@ import GuestDetailsIndex from "./GuestDetails";
 import CheckOut from "./GuestCheckoutModule/CheckOut";
 import "./GuestPopUp.css";
 import AppBar from '@mui/material/AppBar';
+import GuestPic from './GuestPicture/GuestPic';
+
 
 
 export default function GuestPopUp({ open, handleClose, ...props }) {
-  console.log('heeeeeeeeeeeeeee')
-  console.log(props.TotalAmountByGuest)
+  // console.log('heeeeeeeeeeeeeee')
+  // console.log(props.TotalAmountByGuest)
+  console.log(props.GuestPic)
   return (
     <div>
       {props.GuestDetails.occupancyType === "regular" ? (
@@ -93,6 +96,7 @@ export default function GuestPopUp({ open, handleClose, ...props }) {
             Guest Details
           </MDButton>
           <DialogContent>
+            <GuestPic   GuestPic={props.GuestPic} guestdetails={props.GuestDetails}/>
             <GuestDetailsIndex
               guestdetails={props.GuestDetails}
               GuestDueAmount={props.GuestDueAmount}
