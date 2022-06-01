@@ -20,7 +20,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
-
 const useStyles = makeStyles({
   root: {
     height: 35,
@@ -155,9 +154,9 @@ const GuestLoginForm = () => {
   const [amt, setAmt] = React.useState([]);
   const [secureDepo, setSecureDepo] = React.useState([]);
   const [buildId, setBuildId] = React.useState("");
-  const [file, setFile] = useState()
+  const [file, setFile] = useState();
   const [open, setOpen] = React.useState(false);
-  // const [gid, setGid] = React.useState('')
+ 
   const handleClose = () => {
     setOpen(false);
   };
@@ -175,11 +174,10 @@ const GuestLoginForm = () => {
   let userType = userData.data.userType;
   var userID = userData.data.userId;
 
-
   function securityDepoist() {
-    axios.get("guest/getSecurityDepositByOccupencyType/Regular")
-      .then((rse) => console.log(rse.data.securityDepositAmount))
-
+    axios
+      .get("guest/getSecurityDepositByOccupencyType/Regular")
+      .then((rse) => console.log(rse.data.securityDepositAmount));
   }
   useEffect(() => {
     axios
@@ -246,7 +244,7 @@ const GuestLoginForm = () => {
   });
 
   const selectBed = (e) => {
-    securityDepoist()
+    securityDepoist();
     setBed(e.target.outerText);
 
     const bedRent = availableBeds.filter(
@@ -260,34 +258,31 @@ const GuestLoginForm = () => {
     });
   };
   const occupency = (i) => {
-
-    axios.get(`guest/getSecurityDepositByOccupencyType/${i.target.outerText}`)
+    axios
+      .get(`guest/getSecurityDepositByOccupencyType/${i.target.outerText}`)
       .then((rse) => {
-        setSecureDepo(rse.data.securityDepositAmount)
-        console.log(rse.data.securityDepositAmount)
+        setSecureDepo(rse.data.securityDepositAmount);
+        console.log(rse.data.securityDepositAmount);
         if (i.target.outerText == "Daily") {
           setDuration(days);
-          var checkInAmount = amt * (defaultRentofBed + rse.data.securityDepositAmount);
-          setAmountToPay(checkInAmount)
-        }
-        else if (i.target.outerText == "Monthly") {
+          var checkInAmount =
+            amt * (defaultRentofBed + rse.data.securityDepositAmount);
+          setAmountToPay(checkInAmount);
+        } else if (i.target.outerText == "Monthly") {
           setDuration(months);
-          var checkInAmount = (defaultRentofBed + rse.data.securityDepositAmount);
-          setAmountToPay(checkInAmount)
-        }
-        else {
+          var checkInAmount = defaultRentofBed + rse.data.securityDepositAmount;
+          setAmountToPay(checkInAmount);
+        } else {
           setDuration(empty);
-          var checkInAmount = (defaultRentofBed + rse.data.securityDepositAmount);
-          setAmountToPay(checkInAmount)
+          var checkInAmount = defaultRentofBed + rse.data.securityDepositAmount;
+          setAmountToPay(checkInAmount);
         }
-
       })
       .catch((error) => {
-        toast.error("Something went wrong")
-      })
+        toast.error("Something went wrong");
+      });
 
     setOcctype(i.target.outerText);
-
   };
 
   const calculateCheckAmount = (a) => {
@@ -298,7 +293,8 @@ const GuestLoginForm = () => {
       var checkInAmount = a.target.outerText * defaultRentofBed + secureDepo;
       setAmountToPay(checkInAmount);
     } else if (occupencyTypeis == 15) {
-      var checkInAmount = (a.target.outerText * (defaultRentofBed / 30)) + secureDepo;
+      var checkInAmount =
+        a.target.outerText * (defaultRentofBed / 30) + secureDepo;
       setAmountToPay(checkInAmount.toFixed(0));
     } else {
       setAmountToPay(defaultRentofBed + secureDepo);
@@ -313,12 +309,11 @@ const GuestLoginForm = () => {
   const obj2 = { amountToBePaid: amountTooPay };
   const obj3 = { paymentPurpose: OnBoarding };
   const obj5 = { buildingId: buildId };
-  const amountNeedToPay = (n) => { };
-  
+  const amountNeedToPay = (n) => {};
 
   function handleChooseGuestPicture(event) {
-    setFile(event.target.files[0])
-    console.log(event.target.files[0])
+    setFile(event.target.files[0]);
+    console.log(event.target.files[0]);
   }
   return (
     <div>
@@ -326,7 +321,6 @@ const GuestLoginForm = () => {
         <Grid item xs={12}>
           <Container maxWidth="md">
             <div>
-
               <Formik
                 initialValues={{ ...INITIAL_FORM_STATE }}
                 validationSchema={FORM_VALIDATION}
@@ -348,43 +342,41 @@ const GuestLoginForm = () => {
 
                   try {
                     if (guestdata.amountPaid == amountTooPay) {
-
-                      const res = await axios.post("/guest/addGuest", guestdata)
-                      console.log(res)
+                      const res = await axios.post(
+                        "/guest/addGuest",
+                        guestdata
+                      );
+                      console.log(res);
                       if (res.status === 200) {
-
-                        console.log(res.data)
-                        console.log(res.data.id)
-                        console.log(guestdata.guestPicture)
+                        console.log(res.data);
+                        console.log(res.data.id);
+                        console.log(guestdata.guestPicture);
                         const url = `http://localhost:7000/guest/upload/${res.data.id}/`;
                         const formData = new FormData();
-                        formData.append('file', file);
-                        formData.append('fileName', file.name);
+                        formData.append("file", file);
+                        formData.append("fileName", file.name);
                         //formData.append('guestId', res.data.id);
                         const config = {
                           headers: {
-                            'content-type': 'multipart/form-data',
+                            "content-type": "multipart/form-data",
                           },
                         };
                         console.log(formData);
                         console.log(config);
-                        axios.post(url, formData, config)
+                        axios
+                          .post(url, formData, config)
                           .then((response) => {
                             console.log(response.data);
-
-
-                          }).catch((error) => {
-                            console.log(error);
-                            console.log("Not uploaded")
                           })
-
+                          .catch((error) => {
+                            console.log(error);
+                            console.log("Not uploaded");
+                          });
                       } else {
                         handleClose();
-                        toast.error("Something went wrong !")
-                       
+                        toast.error("Something went wrong !");
                       }
                       if (res.data !== null) {
-
                         handleClose();
 
                         toast.success("OnBoarded Successfully");
@@ -395,24 +387,21 @@ const GuestLoginForm = () => {
                         // }, 4000);
                       } else {
                         handleClose();
-                        toast.error("Something went wrong !")
+                        toast.error("Something went wrong !");
                       }
                     } else {
                       handleClose();
                       toast.error(" Need to pay full Amount");
                     }
                   } catch (error) {
-                    console.log(error)
+                    console.log(error);
                     handleClose();
-                    toast.error("Something went wrong !")
+                    toast.error("Something went wrong !");
                   }
-
-
                 }}
               >
                 {(formProps) => (
                   <Form>
-
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <Typography>
@@ -425,7 +414,6 @@ const GuestLoginForm = () => {
                           * Indicates fields are Required
                         </InputLabel>
                         <br />
-
                       </Grid>
                       {userType !== "manager" ? (
                         <Grid item xs={6}>
@@ -494,7 +482,6 @@ const GuestLoginForm = () => {
 
                       {occtype === "Daily" || occtype === "Monthly" ? (
                         <Grid item xs={6}>
-
                           <h6>Duration*</h6>
                           <Select
                             IconComponent={() => (
@@ -510,8 +497,6 @@ const GuestLoginForm = () => {
                         <Grid item xs={6}></Grid>
                       )}
 
-
-
                       <Grid item xs={6}>
                         <h6>Security Deposit</h6>
                         <Textfield
@@ -520,7 +505,6 @@ const GuestLoginForm = () => {
                           value={secureDepo}
                         />
                       </Grid>
-
 
                       <Grid item xs={6}></Grid>
                       <Grid item xs={6}>
@@ -621,21 +605,21 @@ const GuestLoginForm = () => {
                         <h6>Secondary Phone</h6>
                         <Textfield
                           name="secondaryPhoneNumber"
-                        //label="Secondary Phone"
+                          //label="Secondary Phone"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Father's Name</h6>
                         <Textfield
                           name="fatherName"
-                        //label="Father's Name"
+                          //label="Father's Name"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Father's Phone</h6>
                         <Textfield
                           name="fatherNumber"
-                        //label="Father's Phone"
+                          //label="Father's Phone"
                         />
                       </Grid>
 
@@ -643,14 +627,14 @@ const GuestLoginForm = () => {
                         <h6>Blood Group</h6>
                         <Textfield
                           name="bloodGroup"
-                        //label="Blood Group"
+                          //label="Blood Group"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Occupation</h6>
                         <Textfield
                           name="occupation"
-                        //label="Occupation"
+                          //label="Occupation"
                         />
                       </Grid>
                       <br />
@@ -691,8 +675,10 @@ const GuestLoginForm = () => {
                         />
 
  */}
-                        <input type="file" onChange={handleChooseGuestPicture} />
-
+                        <input
+                          type="file"
+                          onChange={handleChooseGuestPicture}
+                        />
                       </Grid>
                       <Grid item xs={12} />
 
@@ -716,7 +702,7 @@ const GuestLoginForm = () => {
                         <h6>Address Line 2</h6>
                         <Textfield
                           name="addressLine2"
-                        //label="Address Line 2"
+                          //label="Address Line 2"
                         />
                       </Grid>
                       <Grid item xs={6}>
