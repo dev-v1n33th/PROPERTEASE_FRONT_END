@@ -319,6 +319,9 @@ const GuestLoginForm = () => {
   function handleChooseGuestPicture(event) {
     setFile(event.target.files[0])
     console.log(event.target.files[0])
+    if(event.target.files[0].size   >= 1000000){
+      toast.warning("Please select file with less than 1 MB")
+    }
   }
   return (
     <div>
@@ -356,7 +359,7 @@ const GuestLoginForm = () => {
                         console.log(res.data)
                         console.log(res.data.id)
                         console.log(guestdata.guestPicture)
-                        const url = `http://localhost:7000/guest/upload/${res.data.id}/`;
+                        const url = `guest/upload/${res.data.id}/`;
                         const formData = new FormData();
                         formData.append('file', file);
                         formData.append('fileName', file.name);
@@ -375,6 +378,7 @@ const GuestLoginForm = () => {
 
                           }).catch((error) => {
                             console.log(error);
+                            toast.warning("File s")
                             console.log("Not uploaded")
                           })
 

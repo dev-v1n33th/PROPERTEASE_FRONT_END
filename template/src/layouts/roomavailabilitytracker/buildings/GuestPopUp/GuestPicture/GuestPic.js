@@ -2,8 +2,8 @@ import React from 'react'
 import { Image, Row, Col,Container } from 'react-bootstrap';
 import { useEffect } from 'react';
 import axios from '../../../../../Uri'
-import { Grid } from '@mui/material';
-import  './GuestPic.css';
+import { Grid ,Avatar} from '@mui/material';
+import {pic}  from './GuestPic.css';
 
 function GuestPic(props) {
     console.log(props.GuestPic)
@@ -23,11 +23,12 @@ function GuestPic(props) {
 
             });
     }, [props.guestdetails.id]);
+    
     return (
        
        <Grid container>
            <Grid item xs={12}>
-            <Image className='pic'  src={guestPicUrl.url} height={200}/>
+            <Avatar className='pic'  src={`data:image/jpeg;base64,${guestPicUrl.data}`} height={230} width={200}/>
             </Grid>
             </Grid>
         
