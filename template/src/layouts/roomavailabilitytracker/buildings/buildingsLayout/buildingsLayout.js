@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid,Avatar } from "@mui/material";
 import MDBox from "components/MDBox";
 // import buildingsData from './buildingsData';
 import HotelOutlinedIcon from "@mui/icons-material/HotelOutlined";
@@ -16,6 +16,7 @@ import HotelOutlinedIcon from "@mui/icons-material/HotelOutlined";
 // import MDButton from "components/MDButton";
 // import axios from 'axios';
 import axios from "../../../../Uri";
+
 import { Image } from "react-bootstrap";
 import GuestPopUp from "../GuestPopUp/guestPopUP";
 // import { setOpenConfigurator } from "context";
@@ -88,7 +89,7 @@ const BuildingsLayout = (props) => {
                   TotalAmountByGuest={TotalAmountByGuest}
                   // GuestPicUrl={GuestPicUrl}
                   GuestPic={GuestPic}
-                  
+
                 />
 
                 <Grid container spacing={2}>
@@ -135,7 +136,9 @@ const BuildingsLayout = (props) => {
                                                       color="success"
                                                     />
                                                   );
+
                                                 }
+																
                                                 // else if (bdno.guestStatus == "InNotice") {
 
                                                 //   return (
@@ -211,52 +214,52 @@ const BuildingsLayout = (props) => {
                                                     <Tooltip
                                                       title={bdno.guestName}
                                                     >
-                                                      <Image className="click" src={bdno.url} height={30} width= {30}
-                                                      onClick={async () => {
-                                                        setLoading(false);
-                                                        console.log(
-                                                          bdno.guestId
-                                                        );
-                                                        // totalAmountPaidByGuest
-
-                                                        await axios
-                                                          .get(`guest/getTotalPaid/${bdno.guestId}`)
-                                                          .then((response) =>
-                                                            (TotalAmountByGuest = response.data)
+                                                      <Avatar className="click" src={`data:image/jpeg;base64,${bdno.url}`} height={40} width={40}
+                                                        onClick={async () => {
+                                                          setLoading(false);
+                                                          console.log(
+                                                            bdno.guestId
                                                           );
-                                                        console.log(
-                                                          TotalAmountByGuest
-                                                        );
-                                                        await axios
-                                                          .get(
-                                                            `guest/onClickDues/${bdno.guestId}`
-                                                          )
-                                                          .then(
-                                                            (response) =>
-                                                            (GuestDueAmount =
-                                                              response.data)
-                                                          );
-                                                        console.log(
-                                                          GuestDueAmount
-                                                        );
+                                                          // totalAmountPaidByGuest
 
-                                                        await axios
-                                                          .get(
-                                                            `/guest/getGuestByGuestId/${bdno.guestId}`
-                                                          )
-                                                          .then((res) => {
-                                                            GuestDetails =
-                                                              res.data;
-                                                            console.log(
-                                                              GuestDetails
+                                                          await axios
+                                                            .get(`guest/getTotalPaid/${bdno.guestId}`)
+                                                            .then((response) =>
+                                                              (TotalAmountByGuest = response.data)
                                                             );
+                                                          console.log(
+                                                            TotalAmountByGuest
+                                                          );
+                                                          await axios
+                                                            .get(
+                                                              `guest/onClickDues/${bdno.guestId}`
+                                                            )
+                                                            .then(
+                                                              (response) =>
+                                                              (GuestDueAmount =
+                                                                response.data)
+                                                            );
+                                                          console.log(
+                                                            GuestDueAmount
+                                                          );
 
-                                                            setOpen(true);
-                                                            setLoading(true);
-                                                          })
-                                                          .catch((err) => {
-                                                            console.log(err);
-                                                          });
+                                                          await axios
+                                                            .get(
+                                                              `/guest/getGuestByGuestId/${bdno.guestId}`
+                                                            )
+                                                            .then((res) => {
+                                                              GuestDetails =
+                                                                res.data;
+                                                              console.log(
+                                                                GuestDetails
+                                                              );
+
+                                                              setOpen(true);
+                                                              setLoading(true);
+                                                            })
+                                                            .catch((err) => {
+                                                              console.log(err);
+                                                            });
 
                                                           // await axios
                                                           // .get(
@@ -266,7 +269,7 @@ const BuildingsLayout = (props) => {
                                                           //   console.log(res);
                                                           //   GuestPicUrl = res.data.;
                                                           //   console.log(GuestPicUrl)
-                                                           
+
 
                                                           // })
                                                           // .catch((err) => {
@@ -275,25 +278,25 @@ const BuildingsLayout = (props) => {
 
                                                           // await axios
                                                           // .get(GuestPicUrl
-                                                            
+
                                                           // )
                                                           // .then((res) => {
                                                           //   // console.log(res);
                                                           //   GuestPic=res;
-                                                           
+
                                                           //   console.log(res)
-                                                           
+
 
                                                           // })
                                                           // .catch((err) => {
                                                           //   console.log(err);
                                                           // });
 
-                                                       
-                                                      }}
 
-                                                      
-                                                       />
+                                                        }}
+
+
+                                                      />
 
                                                     </Tooltip>
                                                   );
