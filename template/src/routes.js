@@ -18,6 +18,7 @@ import AllTransactions from 'layouts/allTrasactions';
 import GuestReportMain from "./layouts/GuestReport/index"
 import ConfigSecurityDeposit from "./layouts/cofigSecurityDeposit/Components/ConfigSecurityDeposit"
 import ConfigSecurityDeposits from 'layouts/cofigSecurityDeposit/Components';
+import PastGuest from 'layouts/profile/indexforpastGuest';
 const routes = [
 	{
 		type: 'collapse',
@@ -42,6 +43,14 @@ const routes = [
 		icon: <Icon fontSize="small">person_add</Icon>,
 		route: '/profile',
 		component: <Profile />
+	},
+	{
+		type: 'collapse',
+		name: 'Past Guest Onboarding',
+		key: 'pastguestprofile',
+		icon: <Icon fontSize="small">person</Icon>,
+		route: '/pastguestprofile',
+		component: <PastGuest />
 	},
 	// {
 	// 	type: 'collapse',
