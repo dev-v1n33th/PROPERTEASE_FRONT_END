@@ -57,7 +57,7 @@ const INITIAL_FORM_STATE = {
   guestPicture: "",
   // createdBy:
   checkinDate: "",
-  amountToBePaid: "",
+ // amountToBePaid: "",
   defaultRent: "",
   securityDeposit: "",
   checkinNotes: "",
@@ -306,9 +306,9 @@ const PastGuestLoginForm = () => {
   const obj = { bedId: bed };
   const OnBoarding = "OnBoarding";
   const obj4 = { createdBy: userID };
-  const objee = { defaultRent: rent };
-  const obj1 = { securityDeposit: secureDepo };
-  const obj2 = { amountToBePaid: amountTooPay };
+  //const objee = { defaultRent: rent };
+  //const obj1 = { securityDeposit: secureDepo };
+  //const obj2 = { amountToBePaid: amountTooPay };
   const obj3 = { paymentPurpose: OnBoarding };
   const obj5 = { buildingId: buildId };
   const amountNeedToPay = (n) => {};
@@ -331,10 +331,10 @@ const PastGuestLoginForm = () => {
 
                   const gustes = Object.assign(guest, obj);
 
-                  const gusting = Object.assign(gustes, objee);
-                  const gusting1 = Object.assign(gusting, obj1);
-                  const guestdata1 = Object.assign(gusting1, obj2);
-                  const guestdata2 = Object.assign(guestdata1, obj4);
+                  // const gusting = Object.assign(gustes, objee);
+                  // const gusting1 = Object.assign(gusting, obj1);
+                  // const guestdata1 = Object.assign(gusting1, obj2);
+                  const guestdata2 = Object.assign(gustes, obj4);
                   const guestdata3 = Object.assign(guestdata2, obj5);
                   const guestdata = Object.assign(guestdata3, obj3);
 
@@ -342,58 +342,59 @@ const PastGuestLoginForm = () => {
                   console.log(gusting.amountPaid);
                   console.log(amountTooPay);
 
-                  try {
-                    const res = await axios.post("/guest/addGuest", guestdata);
-                    console.log(res);
-                    if (res.status === 200) {
-                      console.log(res.data);
-                      console.log(res.data.id);
-                      console.log(guestdata.guestPicture);
-                      const url = `http://localhost:7000/guest/upload/${res.data.id}/`;
-                      const formData = new FormData();
-                      formData.append("file", file);
-                      formData.append("fileName", file.name);
-                      //formData.append('guestId', res.data.id);
-                      const config = {
-                        headers: {
-                          "content-type": "multipart/form-data",
-                        },
-                      };
-                      console.log(formData);
-                      console.log(config);
-                      axios
-                        .post(url, formData, config)
-                        .then((response) => {
-                          console.log(response);
-                          if (res.status === 200) {
-                            handleClose();
-                            toast.success("OnBoarded Successfully🙌");
-                          } else {
-                            toast.error("Something Wrong! Please Try Again");
-                          }
-                        })
-                        .catch((error) => {
-                          console.log(error);
-                          console.log("Not uploaded");
-                        });
-                    } else {
-                      handleClose();
-                      toast.error("Something went wrong !");
-                    }
-                    if (res.data !== null) {
-                      resetForm();
-                      // setTimeout(() => {
-                      //   refreshPage();
-                      // }, 4000);
-                    } else {
-                      handleClose();
-                      toast.error("Something went wrong !");
-                    }
-                  } catch (error) {
-                    console.log(error);
-                    handleClose();
-                    toast.error("Something went wrong !");
-                  }
+                  // try {
+                  //   const res = await axios.post("/guest/addGuest", guestdata);
+                  //   console.log(res);
+                  //   if (res.status === 200) {
+                  //     console.log(res.data);
+                  //     console.log(res.data.id);
+                  //     console.log(guestdata.guestPicture);
+                  //     const url = `http://localhost:7000/guest/upload/${res.data.id}/`;
+                  //     const formData = new FormData();
+                  //     formData.append("file", file);
+                  //     formData.append("fileName", file.name);
+                  //     //formData.append('guestId', res.data.id);
+                  //     const config = {
+                  //       headers: {
+                  //         "content-type": "multipart/form-data",
+                  //       },
+                  //     };
+                  //     console.log(formData);
+                  //     console.log(config);
+                  //     axios
+                  //       .post(url, formData, config)
+                  //       .then((response) => {
+                  //         console.log(response);
+                  //         if (res.status === 200) {
+                  //           handleClose();
+                  //           toast.success("OnBoarded Successfully🙌");
+                  //         } else {
+                  //           toast.error("Something Wrong! Please Try Again");
+                  //         }
+                  //       })
+                  //       .catch((error) => {
+                  //         console.log(error);
+                  //         console.log("Not uploaded");
+                  //       });
+                  //   } else {
+                  //     handleClose();
+                  //     toast.error("Something went wrong !");
+                  //   }
+                  //   if (res.data !== null) {
+                  //     resetForm();
+                  //     // setTimeout(() => {
+                  //     //   refreshPage();
+                  //     // }, 4000);
+                  //   } else {
+                  //     handleClose();
+                  //     toast.error("Something went wrong !");
+                  //   }
+                  // }
+                  //  catch (error) {
+                  //   console.log(error);
+                  //   handleClose();
+                  //   toast.error("Something went wrong !");
+                  // }
                 }}
               >
                 {(formProps) => (
@@ -498,7 +499,7 @@ const PastGuestLoginForm = () => {
                         <Textfield
                           name="securityDeposit"
                           //label="Security Deposit"
-                          value={secureDepo}
+                        //  value={secureDepo}
                         />
                       </Grid>
 
@@ -508,18 +509,18 @@ const PastGuestLoginForm = () => {
                         <Textfield
                           name="defaultRent"
                           // label="Default Rent"
-                          value={defaultRentofBed}
+                         // value={defaultRentofBed}
                         />
                       </Grid>
                       <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
+                      {/* <Grid item xs={6}>
                         <h6>Amount To Be Paid</h6>
                         <Textfield
                           name="amountToBePaid"
                           //label="Amount To Be Paid"
-                          value={amountTooPay}
+                         // value={amountTooPay}
                         />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12}>
                         <Typography>
                           <br />
