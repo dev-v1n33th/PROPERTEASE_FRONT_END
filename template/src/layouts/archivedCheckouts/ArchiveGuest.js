@@ -169,7 +169,7 @@ function ArchivedGuest() {
         // },
      // },
       {
-        title: "Check-Out-Date",
+        title: "Check Out Date",
         field: "checkOutDate",
   
         headerStyle: {

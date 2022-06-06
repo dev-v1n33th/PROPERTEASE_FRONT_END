@@ -14,7 +14,7 @@ function AllTransaction() {
   const columns = [
 
     {
-      title: "GuestName",
+      title: "Guest Name",
       field: "guestName",
       type: "text",
       headerStyle: {
