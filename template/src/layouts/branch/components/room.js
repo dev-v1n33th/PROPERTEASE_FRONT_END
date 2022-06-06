@@ -122,9 +122,11 @@ function Room() {
       validate: (rowData) => {
         if (rowData.roomNumber === undefined) {
           return "Room Number is Required";
-        } else if (rowData.roomNumber.match(/[^0-9]/g)) {
-          return " Please enter valid numbers";
-        } else if (
+        } 
+        // else if (rowData.roomNumber.match(/[^0-9]/g)) {
+        //   return " Please enter valid numbers";
+        // }
+         else if (
           rowData.roomNumber.length < 3 ||
           rowData.roomNumber.length > 3
         ) {
