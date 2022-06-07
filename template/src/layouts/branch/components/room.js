@@ -127,8 +127,7 @@ function Room() {
         //   return " Please enter valid numbers";
         // }
          else if (
-          rowData.roomNumber.length < 3 ||
-          rowData.roomNumber.length > 3
+          rowData.roomNumber.length < 3 
         ) {
           return " Please enter room numbers";
         }
