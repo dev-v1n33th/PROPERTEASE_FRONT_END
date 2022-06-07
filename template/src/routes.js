@@ -131,7 +131,7 @@ const routes = [
 	},
 	{
 		type: 'collapse',
-		name: 'Config Security Deposit',
+		name: 'Set Defaults',
 		key:'configSecurityDeposit',
 		icon:<Icon fontSize="small">send</Icon>,
 		route:'/configure',
