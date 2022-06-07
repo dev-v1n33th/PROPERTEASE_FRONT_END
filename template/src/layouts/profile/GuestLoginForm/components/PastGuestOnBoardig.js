@@ -56,8 +56,8 @@ const INITIAL_FORM_STATE = {
   state: "",
   guestPicture: "",
   // createdBy:
-  checkinDate: "",
- // amountToBePaid: "",
+  checkInDate: "",
+  // amountToBePaid: "",
   defaultRent: "",
   securityDeposit: "",
   checkinNotes: "",
@@ -97,7 +97,7 @@ const FORM_VALIDATION = Yup.object().shape({
       excludeEmptyString: false,
     })
     .required("Required"),
-checkinDate:Yup.date().required("Required"),
+  checkInDate: Yup.date().required("Required"),
   secondaryPhoneNumber: Yup.string().matches(/^[6-9]\d{9}$/, {
     message: "Please enter Valid Mobile Number",
     excludeEmptyString: false,
@@ -338,63 +338,65 @@ const PastGuestLoginForm = () => {
                   const guestdata3 = Object.assign(guestdata2, obj5);
                   const guestdata = Object.assign(guestdata3, obj3);
 
-                  console.log(guestdata);
-                  console.log(gusting.amountPaid);
-                  console.log(amountTooPay);
+                  // console.log(guestdata);
+                  // console.log(gusting.amountPaid);
+                  // console.log(amountTooPay);
 
-                  // try {
-                  //   const res = await axios.post("/guest/addGuest", guestdata);
-                  //   console.log(res);
-                  //   if (res.status === 200) {
-                  //     console.log(res.data);
-                  //     console.log(res.data.id);
-                  //     console.log(guestdata.guestPicture);
-                  //     const url = `http://localhost:7000/guest/upload/${res.data.id}/`;
-                  //     const formData = new FormData();
-                  //     formData.append("file", file);
-                  //     formData.append("fileName", file.name);
-                  //     //formData.append('guestId', res.data.id);
-                  //     const config = {
-                  //       headers: {
-                  //         "content-type": "multipart/form-data",
-                  //       },
-                  //     };
-                  //     console.log(formData);
-                  //     console.log(config);
-                  //     axios
-                  //       .post(url, formData, config)
-                  //       .then((response) => {
-                  //         console.log(response);
-                  //         if (res.status === 200) {
-                  //           handleClose();
-                  //           toast.success("OnBoarded Successfully🙌");
-                  //         } else {
-                  //           toast.error("Something Wrong! Please Try Again");
-                  //         }
-                  //       })
-                  //       .catch((error) => {
-                  //         console.log(error);
-                  //         console.log("Not uploaded");
-                  //       });
-                  //   } else {
-                  //     handleClose();
-                  //     toast.error("Something went wrong !");
-                  //   }
-                  //   if (res.data !== null) {
-                  //     resetForm();
-                  //     // setTimeout(() => {
-                  //     //   refreshPage();
-                  //     // }, 4000);
-                  //   } else {
-                  //     handleClose();
-                  //     toast.error("Something went wrong !");
-                  //   }
-                  // }
-                  //  catch (error) {
-                  //   console.log(error);
-                  //   handleClose();
-                  //   toast.error("Something went wrong !");
-                  // }
+                  try {
+                    const res = await axios.post(
+                      "/guest/addPastGuest",
+                      guestdata
+                    );
+                    console.log(res);
+                    if (res.status === 200) {
+                      console.log(res.data);
+                      console.log(res.data.id);
+                      console.log(guestdata.guestPicture);
+                      const url = `http://localhost:7000/guest/upload/${res.data.id}/`;
+                      const formData = new FormData();
+                      formData.append("file", file);
+                      formData.append("fileName", file.name);
+                      //formData.append('guestId', res.data.id);
+                      const config = {
+                        headers: {
+                          "content-type": "multipart/form-data",
+                        },
+                      };
+                      console.log(formData);
+                      console.log(config);
+                      axios
+                        .post(url, formData, config)
+                        .then((response) => {
+                          console.log(response);
+                          if (res.status === 200) {
+                            handleClose();
+                            toast.success("OnBoarded Successfully🙌");
+                          } else {
+                            toast.error("Something Wrong! Please Try Again");
+                          }
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                          console.log("Not uploaded");
+                        });
+                    } else {
+                      handleClose();
+                      toast.error("Something went wrong !");
+                    }
+                    if (res.data !== null) {
+                      resetForm();
+                      // setTimeout(() => {
+                      //   refreshPage();
+                      // }, 4000);
+                    } else {
+                      handleClose();
+                      toast.error("Something went wrong !");
+                    }
+                  } catch (error) {
+                    console.log(error);
+                    handleClose();
+                    toast.error("Something went wrong !");
+                  }
                 }}
               >
                 {(formProps) => (
@@ -499,7 +501,7 @@ const PastGuestLoginForm = () => {
                         <Textfield
                           name="securityDeposit"
                           //label="Security Deposit"
-                        //  value={secureDepo}
+                          //  value={secureDepo}
                         />
                       </Grid>
 
@@ -509,7 +511,7 @@ const PastGuestLoginForm = () => {
                         <Textfield
                           name="defaultRent"
                           // label="Default Rent"
-                         // value={defaultRentofBed}
+                          // value={defaultRentofBed}
                         />
                       </Grid>
                       <Grid item xs={6}></Grid>
@@ -531,7 +533,7 @@ const PastGuestLoginForm = () => {
                           <h6>Check In-Date *</h6>
                           <DateTimePicker
                             maxdate={new Date()}
-                            name="checkinDate"
+                            name="checkInDate"
                             //label="Date of Birth"
                             required
                           />
