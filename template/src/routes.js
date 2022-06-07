@@ -93,7 +93,7 @@ const routes = [
 		type: 'collapse',
 		name: 'Branch & Employees',
 		key: 'branch',
-		icon: <Icon fontSize="small">table_view</Icon>,
+		icon: <Icon fontSize="small">buildigs</Icon>,
 		route: '/branch',
 		component: <Branch />
 	},
@@ -101,7 +101,7 @@ const routes = [
 		type: 'collapse',
 		name: 'Upcoming Checkouts',
 		key: 'upcomingCheckouts',
-		icon: <Icon fontSize="small">table</Icon>,
+		icon: <Icon fontSize="small">upcomingcheckout</Icon>,
 		route: '/upcomingCheckouts',
 		component: <InNotices />
 	},
@@ -117,7 +117,7 @@ const routes = [
 		type: 'collapse',
 		name: 'Payments History',
 		key: 'allTransactions',
-		icon: <Icon fontSize="small">Transactions</Icon>,
+		icon: <Icon fontSize="small">payments</Icon>,
 		route: '/allTransactions',
 		component: <AllTransactions />
 	},
@@ -125,7 +125,7 @@ const routes = [
 		type: 'collapse',
 		name: 'Guest Data',
 		key: 'guestData',
-		icon: <Icon fontSize="small">GuestData</Icon>,
+		icon: <Icon fontSize="small">manypersons</Icon>,
 		route: '/guestData',
 		component: <GuestReportMain />
 	},
@@ -133,7 +133,7 @@ const routes = [
 		type: 'collapse',
 		name: 'Config Security Deposit',
 		key:'configSecurityDeposit',
-		icon:<Icon fontSize="small">CofigSecurityDeposit</Icon>,
+		icon:<Icon fontSize="small">send</Icon>,
 		route:'/configure',
 		component:<ConfigSecurityDeposits />
 	},
