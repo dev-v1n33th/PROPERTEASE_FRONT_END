@@ -49,6 +49,14 @@ function ConfigSecurityDeposit() {
         color: "white",
       },
     },
+    {
+      title: "Notice Period",
+      field: "noticeDays",
+      headerStyle: {
+        backgroundColor: "#1E90FF",
+        color: "white",
+      },
+    },
   ];
 
   return (
@@ -76,7 +84,7 @@ function ConfigSecurityDeposit() {
                         newRow
                       )
                       .then(() => {
-                        toast.success("New data added");
+                        toast.success("Data Added Successfully");
                       })
                       .catch((err) => {
                         toast.error("Server error");
