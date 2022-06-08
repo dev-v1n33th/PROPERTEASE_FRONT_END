@@ -352,7 +352,7 @@ const PastGuestLoginForm = () => {
                       console.log(res.data);
                       console.log(res.data.id);
                       console.log(guestdata.guestPicture);
-                      const url = `http://localhost:7000/guest/upload/${res.data.id}/`;
+                      const url = `guest/upload/${res.data.id}/`;
                       const formData = new FormData();
                       formData.append("file", file);
                       formData.append("fileName", file.name);
@@ -377,6 +377,7 @@ const PastGuestLoginForm = () => {
                         })
                         .catch((error) => {
                           console.log(error);
+                          toast.error("Image is Not Uploadeded")
                           console.log("Not uploaded");
                         });
                     } else {
@@ -385,9 +386,7 @@ const PastGuestLoginForm = () => {
                     }
                     if (res.data !== null) {
                       resetForm();
-                      // setTimeout(() => {
-                      //   refreshPage();
-                      // }, 4000);
+                    
                     } else {
                       handleClose();
                       toast.error("Something went wrong !");
