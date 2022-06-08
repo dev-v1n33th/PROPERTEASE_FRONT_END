@@ -253,11 +253,11 @@ function Room() {
                             newRow2
                           )
                           .catch((err) => {
-                            toast.error("Server error");
+                            toast.error("Server error😥");
                           });
                         console.log(newRow2);
 
-                        toast.success("New Room added");
+                        toast.success("New Room added👍");
                         //console.log(newRow1);
 
                         setData(updatedRows);
@@ -265,7 +265,7 @@ function Room() {
                       }, 2000);
                     } else {
                       toast.error(
-                        "Please select Building and Floor to Proceed."
+                        "Please select Building and Floor to Proceed.😁"
                       );
                     }
                   }),
@@ -280,7 +280,7 @@ function Room() {
                                        .then((res) =>{
                                        console.log(res)
                                        if(res.data ==="Action Failed:This Room Contains Beds")
-                                       {toast.error("Room can't be deleted as it contains Beds")}
+                                       {toast.error("Room can't be deleted as it contains Beds🤷‍♂️")}
                                       else{
                                         toast.success("Room deleted successfully")
                                       }});
