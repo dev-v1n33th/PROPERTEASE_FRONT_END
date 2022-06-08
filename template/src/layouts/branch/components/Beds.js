@@ -339,11 +339,11 @@ function Beds() {
 													newRow3
 												)
 												.catch((err) => {
-													toast.error("Server error");
+													toast.error("Server error🤦‍♀️");
 												});
 											// console.log(newRow3);
 
-											toast.success("New Bed added");
+											toast.success("New Bed added👍");
 
 											//console.log(newRow1);
 											setData(updatedRows);
@@ -351,7 +351,7 @@ function Beds() {
 										}, 2000);
 									}
 									else {
-										toast.error("Please select Building, Floor/Room to proceed.");
+										toast.error("Please select Building, Floor/Room to proceed.😁");
 									}
 
 								}),
@@ -363,7 +363,7 @@ function Beds() {
 									setTimeout(() => {
 										const res = axios
 											.put(`/bed/updateBedById/${index}`, updatedRow)
-											.then((res) => { toast.success("Bed updated Successfully"); })
+											.then((res) => { toast.success("Bed updated Successfully👍"); })
 											.catch((err) => {
 												toast.error("Server error");
 											});
@@ -385,10 +385,10 @@ function Beds() {
 												if (res.data === "Action Failed: Bed contains Guest")
 												// console.log("heeeeeeeeeeeeeeeeeiiiiii")
 												{
-													toast.error("Bed can't be deletes as it contains Guest")
+													toast.error("Bed can't be deletes as it contains Guest🤷‍♂️")
 												}
 												else {
-													toast.success("Bed deleted successfully")
+													toast.success("Bed deleted successfully👍")
 												}
 											});
 										console.log(res);

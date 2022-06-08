@@ -24,6 +24,7 @@ function ConfigSecurityDeposit() {
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Something went wrong🤦‍♂️")
       });
   }, []);
 
@@ -84,10 +85,10 @@ function ConfigSecurityDeposit() {
                         newRow
                       )
                       .then(() => {
-                        toast.success("Data Added Successfully");
+                        toast.success("Data Added Successfully👍");
                       })
                       .catch((err) => {
-                        toast.error("Server error");
+                        toast.error("Server error😢");
                       });
                     console.log(newRow);
 
@@ -111,14 +112,16 @@ function ConfigSecurityDeposit() {
                       .put(`/guest/updateSecurityDeposit/${index}`, updatedRow)
                       .then((resp) => {
                         console.log(resp);
+                        setData(updatedRows);
+                        toast.success(" Updated Successfully👍");
                       })
 
                       .catch((err) => {
                         toast.error("Server error");
                       });
 
-                    setData(updatedRows);
-                    toast.success(" Updated Successfully");
+                    // setData(updatedRows);
+                    // toast.success(" Updated Successfully👍");
                     console.log(updatedRows);
                     resolve();
                   });

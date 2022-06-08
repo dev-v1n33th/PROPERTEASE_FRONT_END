@@ -372,7 +372,7 @@ const PastGuestLoginForm = () => {
                             handleClose();
                             toast.success("OnBoarded Successfully🙌");
                           } else {
-                            toast.error("Something Wrong! Please Try Again");
+                            toast.error("Something Wrong! Please Try Again😒 ");
                           }
                         })
                         .catch((error) => {
@@ -763,7 +763,7 @@ const PastGuestLoginForm = () => {
                     </Grid>
                     <ToastContainer
                       position="top-right"
-                      min-width="2%"
+                      min-width="3%"
                       autoClose={3000}
                       hideProgressBar={false}
                       newestOnTop={false}

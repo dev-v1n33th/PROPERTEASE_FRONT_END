@@ -188,11 +188,11 @@ function Build() {
                         newRow1
                       )
                       .catch((err) => {
-                        toast.error("Server error");
+                        toast.error("Server error😥");
                       });
                     //console.log(newRow);
 
-                    toast.success("New Buiding added");
+                    toast.success("New Buiding added👍");
                     setData(updatedRows);
 
                     resolve();

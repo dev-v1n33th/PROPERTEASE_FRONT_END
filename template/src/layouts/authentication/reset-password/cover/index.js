@@ -59,7 +59,7 @@ function ResetPassword() {
       });
       {
         result.data
-          ? toast.success("Password Reset Success") &&
+          ? toast.success("Password Reset Success✌") &&
             navigate("/authentication/sign-in")
           : alert("something went wrong, unable to update password");
       }

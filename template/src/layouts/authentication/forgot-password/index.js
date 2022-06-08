@@ -55,7 +55,7 @@ function ForgotBasic() {
 			{
 				result.data
 					? (navigate('/authentication/sign-in'),console.log('hii'))
-					: toast.error('something went wrong, unable to update password');
+					: toast.error('something went wrong, unable to update password😢');
 			}
 			
 		};
@@ -65,7 +65,7 @@ function ForgotBasic() {
 	
     else
 	{
-		toast.error("new password and confrim password should be same");
+		toast.error("new password and confrim password should be same😊");
 	}
 };
 
