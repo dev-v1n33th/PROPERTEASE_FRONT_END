@@ -28,7 +28,7 @@ function GuestPic(props) {
        
        <Grid container>
            <Grid item xs={12}>
-            <Image className='pic'  src={`data:image/jpeg;base64,${guestPicUrl.data}`} height={230} width={200}/>
+            <Image className='pic' alt={`${props.guestdetails.firstName} ${props.guestdetails.lastName}`} src={`data:image/jpeg;base64,${guestPicUrl.data}`} height={230} width={200}/>
             </Grid>
             </Grid>
         

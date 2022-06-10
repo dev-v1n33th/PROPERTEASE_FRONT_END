@@ -30,7 +30,7 @@ function ConfigSecurityDeposit() {
 
   const columns = [
     {
-      title: "Occupency Type",
+      title: "Occupancy Type",
       field: "occupencyType",
       lookup: {
         Daily: "Daily",

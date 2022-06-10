@@ -65,7 +65,7 @@ function AllTransaction() {
       },
     },
     {
-      title: "Guest_BedID",
+      title: "Guest BedID",
       field: "bedId",
 
       headerStyle: {
