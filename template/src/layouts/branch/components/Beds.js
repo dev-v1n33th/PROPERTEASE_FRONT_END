@@ -114,6 +114,7 @@ function Beds() {
 		{
 			title: "Bed Name",
 			field: "bedName",
+			editable:"onAdd",
 			headerStyle: {
 				backgroundColor: "#1E90FF",
 				color: "white",
@@ -359,7 +360,7 @@ function Beds() {
 								new Promise((resolve, reject) => {
 									const index = oldRow.id;
 									const updatedRows = [...data];
-									updatedRows[index] = updatedRow;
+									updatedRows[oldRow.tableData.id] = updatedRow;
 									setTimeout(() => {
 										const res = axios
 											.put(`/bed/updateBedById/${index}`, updatedRow)
