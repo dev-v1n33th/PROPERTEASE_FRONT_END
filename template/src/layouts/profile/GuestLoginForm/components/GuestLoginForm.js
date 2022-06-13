@@ -70,7 +70,7 @@ const FORM_VALIDATION = Yup.object().shape({
     .matches(/^[aA-zZ\s]+$/, "Invalid LastName ")
     .required("Required"),
   fatherName: Yup.string().matches(/^[aA-zZ\s]+$/, "Invalid LastName "),
-  email: Yup.string().email("Invalid email."),
+  email: Yup.string().email("Invalid email.").required("Required"),
   dateOfBirth: Yup.date()
 
     // .test(
@@ -380,7 +380,7 @@ const GuestLoginForm = () => {
                       
                                                 })
                                               }else{
-                                                toast.warning(" Picture is Not Uploaded")
+                                                // toast.warning(" Picture is Not Uploaded")
                                               }
                       
                                             }else{
@@ -663,23 +663,14 @@ const GuestLoginForm = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <h6>Guest Picture</h6>
-                        {/* <Textfield
-                          name="guestPicture"
-                          type="file"
-                        //  onClick={choose}
-                          onChange={handleChooseGuestPicture}
-                          // label="Address Line 1"
-                          required
-                        />
-
- */}
+                        
                         <input
                           type="file"
                           onChange={handleChooseGuestPicture}
                         />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12} />
 
                       <Grid item xs={12}>

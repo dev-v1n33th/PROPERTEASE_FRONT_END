@@ -169,8 +169,8 @@ function InNotice() {
         // },
       },
       {
-        title: "Check-Out-Date",
-        field: "checkOutDate",
+        title: "Check Out Date",
+        field: "plannedCheckOutDate",
   
         headerStyle: {
           backgroundColor: "#1E90FF",

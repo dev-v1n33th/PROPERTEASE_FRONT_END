@@ -73,14 +73,15 @@ const FORM_VALIDATION = Yup.object().shape({
   fatherName: Yup.string().matches(/^[aA-zZ\s]+$/, "Invalid LastName "),
   email: Yup.string().email("Invalid email.").required("Required"),
   dateOfBirth: Yup.date()
-    .required("DOB is Required")
-    .test(
-      "DOB",
-      "Please choose a valid date of birth",
-      (date) =>
-        moment().diff(moment(date), "years") >= 12 &&
-        moment().diff(moment(date), "years") <= 80
-    ),
+    // .required("DOB is Required")
+    // .test(
+    //   "DOB",
+    //   "Please choose a valid date of birth",
+    //   (date) =>
+    //     moment().diff(moment(date), "years") >= 12 &&
+    //     moment().diff(moment(date), "years") <= 80
+    // )
+    ,
   bloodGroup: Yup.string().matches(/^(A|B|AB|O)[+-]$/, {
     message: "Please enter valid Blood Group.",
     excludeEmptyString: false,
@@ -343,55 +344,55 @@ const PastGuestLoginForm = () => {
                   // console.log(amountTooPay);
 
                   try {
-                    const res = await axios.post(
-                      "/guest/addPastGuest",
-                      guestdata
-                    );
-                    console.log(res);
-                    if (res.status === 200) {
-                      console.log(res.data);
-                      console.log(res.data.id);
-                      console.log(guestdata.guestPicture);
-                      const url = `guest/upload/${res.data.id}/`;
-                      const formData = new FormData();
-                      formData.append("file", file);
-                      formData.append("fileName", file.name);
-                      //formData.append('guestId', res.data.id);
-                      const config = {
-                        headers: {
-                          "content-type": "multipart/form-data",
-                        },
-                      };
-                      console.log(formData);
-                      console.log(config);
-                      axios
-                        .post(url, formData, config)
-                        .then((response) => {
-                          console.log(response);
-                          if (res.status === 200) {
-                            handleClose();
-                            toast.success("OnBoarded Successfully🙌");
-                          } else {
-                            toast.error("Something Wrong! Please Try Again😒 ");
-                          }
-                        })
-                        .catch((error) => {
-                          console.log(error);
-                          toast.error("Image is Not Uploadeded")
-                          console.log("Not uploaded");
-                        });
+                    if (guestdata) {
+                      const res = await axios.post("/guest/addPastGuest",guestdata)
+                                            .then((res) => {if (res.data.id !== null) {
+                                              handleClose();
+                                              toast.success(" Guest onboarded successfully");
+                                              resetForm();
+                                              const url = `guest/upload/${res.data.id}/`;
+                                              const formData = new FormData();
+                                              if(file !== undefined){
+                                              console.log(file)
+                                              formData.append("file", file);
+                                              formData.append("fileName", file.name);
+                                             
+                                              const config = {
+                                                headers: {
+                                                  "content-type": "multipart/form-data",
+                                                },
+                                              };
+                                              console.log(formData);
+                                              console.log(config);
+                                              
+                                              axios
+                                                .post(url, formData, config)
+                                                .then((response) => {
+                                                  console.log(response.data);
+                                                  toast.success("guest picture uploaded successfully")
+                      
+                      
+                                                }).catch((error) => {
+                                                  console.log(error);
+                                                  // toast.warning("File s")
+                                                  console.log("Not uploaded")
+                      
+                                                })
+                                              }else{
+                                                // toast.warning(" Picture is Not Uploaded")
+                                              }
+                      
+                                            }else{
+                                              console.log('heeeeeeeeeeeeeeeyyyyyyyyyyyy')
+                                              
+                                            }})
+                      
                     } else {
                       handleClose();
-                      toast.error("Something went wrong !");
+                      toast.error(" Guest Not Onboarded");
                     }
-                    if (res.data !== null) {
-                      resetForm();
-                    
-                    } else {
-                      handleClose();
-                      toast.error("Something went wrong !");
-                    }
-                  } catch (error) {
+                  }
+                   catch (error) {
                     console.log(error);
                     handleClose();
                     toast.error("Something went wrong !");
@@ -670,23 +671,14 @@ const PastGuestLoginForm = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <h6>Guest Picture</h6>
-                        {/* <Textfield
-                          name="guestPicture"
-                          type="file"
-                        //  onClick={choose}
-                          onChange={handleChooseGuestPicture}
-                          // label="Address Line 1"
-                          required
-                        />
-
- */}
+                      
                         <input
                           type="file"
                           onChange={handleChooseGuestPicture}
                         />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12} />
 
                       <Grid item xs={12}>
