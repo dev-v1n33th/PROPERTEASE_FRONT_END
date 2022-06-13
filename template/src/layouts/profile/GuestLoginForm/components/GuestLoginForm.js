@@ -70,16 +70,17 @@ const FORM_VALIDATION = Yup.object().shape({
     .matches(/^[aA-zZ\s]+$/, "Invalid LastName ")
     .required("Required"),
   fatherName: Yup.string().matches(/^[aA-zZ\s]+$/, "Invalid LastName "),
-  email: Yup.string().email("Invalid email.").required("Required"),
+  email: Yup.string().email("Invalid email."),
   dateOfBirth: Yup.date()
-    .required("DOB is Required")
-    .test(
-      "DOB",
-      "Please choose a valid date of birth",
-      (date) =>
-        moment().diff(moment(date), "years") >= 12 &&
-        moment().diff(moment(date), "years") <= 80
-    ),
+
+    // .test(
+    //   "DOB",
+    //   "Please choose a valid date of birth",
+    //   (date) =>
+    //     moment().diff(moment(date), "years") >= 12 &&
+    //     moment().diff(moment(date), "years") <= 80
+    // )
+    ,
   bloodGroup: Yup.string().matches(/^(A|B|AB|O)[+-]$/, {
     message: "Please enter valid Blood Group.",
     excludeEmptyString: false,
@@ -154,9 +155,9 @@ const GuestLoginForm = () => {
   const [amt, setAmt] = React.useState([]);
   const [secureDepo, setSecureDepo] = React.useState([]);
   const [buildId, setBuildId] = React.useState("");
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [open, setOpen] = React.useState(false);
- 
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -309,13 +310,13 @@ const GuestLoginForm = () => {
   const obj2 = { amountToBePaid: amountTooPay };
   const obj3 = { paymentPurpose: OnBoarding };
   const obj5 = { buildingId: buildId };
-  const amountNeedToPay = (n) => {};
+  const amountNeedToPay = (n) => { };
 
   function handleChooseGuestPicture(event) {
 
     setFile(event.target.files[0])
     console.log(event.target.files[0])
-    if(event.target.files[0].size   >= 1000000){
+    if (event.target.files[0].size >= 1000000) {
       toast.warning("Please select file with less than 1 MB")
     }
 
@@ -341,68 +342,57 @@ const GuestLoginForm = () => {
                   const guestdata3 = Object.assign(guestdata2, obj5);
                   const guestdata = Object.assign(guestdata3, obj3);
 
-                  console.log(guestdata);
-                  console.log(gusting.amountPaid);
-                  console.log(amountTooPay);
+                
 
                   try {
                     if (guestdata.amountPaid == amountTooPay) {
-                      const res = await axios.post(
-                        "/guest/addGuest",
-                        guestdata
-                      );
-                      console.log(res);
-                      if (res.status === 200) {
-
-                        console.log(res.data)
-                        console.log(res.data.id)
-                        console.log(guestdata.guestPicture)
-                        const url = `guest/upload/${res.data.id}/`;
-                        const formData = new FormData();
-                        formData.append("file", file);
-                        formData.append("fileName", file.name);
-                        //formData.append('guestId', res.data.id);
-                        const config = {
-                          headers: {
-                            "content-type": "multipart/form-data",
-                          },
-                        };
-                        console.log(formData);
-                        console.log(config);
-                        axios
-                          .post(url, formData, config)
-                          .then((response) => {
-                            console.log(response.data);
-
-
-                          }).catch((error) => {
-                            console.log(error);
-                            toast.warning("File s")
-                            console.log("Not uploaded")
-
-                          })
-                          
-                      } else {
-                        handleClose();
-                        toast.error("Something went wrong !");
-                      }
-                      if (res.data !== null) {
-                        handleClose();
-
-                        toast.success("OnBoarded Successfully");
-
-                        resetForm();
-                        // setTimeout(() => {
-                        //   refreshPage();
-                        // }, 4000);
-                      } else {
-                        handleClose();
-                        toast.error("Something went wrong !");
-                      }
+                      const res = await axios.post("/guest/addGuest",guestdata)
+                                            .then((res) => {if (res.data.id !== null) {
+                                              handleClose();
+                                              toast.success(" Guest onboarded successfully");
+                                              resetForm();
+                                              const url = `guest/upload/${res.data.id}/`;
+                                              const formData = new FormData();
+                                              if(file !== null){
+                                              console.log(file)
+                                              formData.append("file", file);
+                                              formData.append("fileName", file.name);
+                                             
+                                              const config = {
+                                                headers: {
+                                                  "content-type": "multipart/form-data",
+                                                },
+                                              };
+                                              console.log(formData);
+                                              console.log(config);
+                                              
+                                              axios
+                                                .post(url, formData, config)
+                                                .then((response) => {
+                                                  console.log(response.data);
+                                                  toast.success("guest picture uploaded successfully")
+                      
+                      
+                                                }).catch((error) => {
+                                                  console.log(error);
+                                                  // toast.warning("File s")
+                                                  console.log("Not uploaded")
+                      
+                                                })
+                                              }else{
+                                                toast.warning(" Picture is Not Uploaded")
+                                              }
+                      
+                                            }else{
+                                              console.log('heeeeeeeeeeeeeeeyyyyyyyyyyyy')
+                                              
+                                            }})
+                      
                     } else {
                       handleClose();
                       toast.error(" Need to pay full Amount");
                     }
+
                   } catch (error) {
                     console.log(error);
                     handleClose();
@@ -586,7 +576,7 @@ const GuestLoginForm = () => {
                         />
                       </Grid>
                       <Grid item xs={6}>
-                        <h6>Email *</h6>
+                        <h6>Email </h6>
                         <Textfield
                           name="email"
                           // label="Email"
@@ -594,7 +584,7 @@ const GuestLoginForm = () => {
                         />
                       </Grid>
                       <Grid item xs={6}>
-                        <h6>Date of Birth *</h6>
+                        <h6>Date of Birth </h6>
                         <DateTimePicker
                           maxdate={new Date()}
                           name="dateOfBirth"
@@ -615,21 +605,21 @@ const GuestLoginForm = () => {
                         <h6>Secondary Phone</h6>
                         <Textfield
                           name="secondaryPhoneNumber"
-                          //label="Secondary Phone"
+                        //label="Secondary Phone"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Father's Name</h6>
                         <Textfield
                           name="fatherName"
-                          //label="Father's Name"
+                        //label="Father's Name"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Father's Phone</h6>
                         <Textfield
                           name="fatherNumber"
-                          //label="Father's Phone"
+                        //label="Father's Phone"
                         />
                       </Grid>
 
@@ -637,14 +627,14 @@ const GuestLoginForm = () => {
                         <h6>Blood Group</h6>
                         <Textfield
                           name="bloodGroup"
-                          //label="Blood Group"
+                        //label="Blood Group"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Occupation</h6>
                         <Textfield
                           name="occupation"
-                          //label="Occupation"
+                        //label="Occupation"
                         />
                       </Grid>
                       <br />
@@ -712,7 +702,7 @@ const GuestLoginForm = () => {
                         <h6>Address Line 2</h6>
                         <Textfield
                           name="addressLine2"
-                          //label="Address Line 2"
+                        //label="Address Line 2"
                         />
                       </Grid>
                       <Grid item xs={6}>
