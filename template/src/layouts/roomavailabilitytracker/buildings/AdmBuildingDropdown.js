@@ -9,11 +9,14 @@ import BedSummaryChart from "./buildingspieCharts/bedSummaryChart";
 import SummaryTable from "./buildingsSummaryTable/SummaryTable";
 import PaymentSummaryChart from "./buildingspieCharts/paymentSummaryChart";
 import { Grid } from "@mui/material";
+import MDButton from "components/MDButton";
+import EmailBtn from "./EmailBtn/EmailBtn";
 
 function AdmBuildingDropdown(props) {
   const [selected, setSelected] = React.useState("");
   const [building, setBuilding] = React.useState([]);
   const [buildingId, setbuildingId] = React.useState();
+  
 
   function handleChange(event) {
     //console.log(event.target)
@@ -70,7 +73,10 @@ function AdmBuildingDropdown(props) {
             <Grid item xs={6}>
         <SummaryTable buildingId={buildingId} />
       </Grid>
+      
           </Grid>
+          <EmailBtn buildingId={buildingId}/>
+          <br></br>
           <BuildingsLayout buildingId={buildingId} />
         </div>
       )}
