@@ -9,6 +9,7 @@ import BedSummaryChart from "./buildingspieCharts/bedSummaryChart";
 import PaymentSummaryChart from "./buildingspieCharts/paymentSummaryChart";
 import { Grid } from "@mui/material";
 import SummaryTable from "./buildingsSummaryTable/SummaryTable";
+import EmailBtn from "./EmailBtn/EmailBtn";
 
 function MgrBuildingDropdown(props) {
   const [selected, setSelected] = React.useState("");
@@ -63,6 +64,8 @@ function MgrBuildingDropdown(props) {
         <SummaryTable buildingId={buildingsId} />
         </Grid>
       </Grid>
+      <EmailBtn buildingId={buildingsId} />
+      <br></br>
         <BuildingsLayout buildingId={buildingsId} /> 
         </Grid>
 
