@@ -19,7 +19,7 @@ function EmailBtn(props) {
                   size="small"
                   justify="center"
                   style={{ borderRadius: 10 }}
-                  onClick={emailHandler}>PAYMENT REMAINDER
+                  onClick={emailHandler}>PAYMENT REMAINDERS
 
         </MDButton>
 
