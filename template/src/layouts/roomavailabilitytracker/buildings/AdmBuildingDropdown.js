@@ -11,8 +11,20 @@ import PaymentSummaryChart from "./buildingspieCharts/paymentSummaryChart";
 import { Grid } from "@mui/material";
 import MDButton from "components/MDButton";
 import EmailBtn from "./EmailBtn/EmailBtn";
+import { makeStyles } from "@mui/styles";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 function AdmBuildingDropdown(props) {
+  const useStyles = makeStyles({
+    root: {
+      height: 35,
+    },
+    size: {
+      width: 40,
+      height: 30,
+    },
+  });
+  const classes= useStyles();
   const [selected, setSelected] = React.useState("");
   const [building, setBuilding] = React.useState([]);
   const [buildingId, setbuildingId] = React.useState();
@@ -31,6 +43,8 @@ function AdmBuildingDropdown(props) {
 
   return (
     <>
+    <Grid container>
+      <Grid item xs={6}>
       <label value="Select Building: ">Select Building: </label>
 
       <Select
@@ -38,6 +52,7 @@ function AdmBuildingDropdown(props) {
         style={{ width: "30%", height: "10%" }}
         value={selected}
         name="building"
+        IconComponent={()=> (<ArrowDropDownIcon className={classes.size}/>)}
       >
         {building.map((post) => {
           return (
@@ -55,6 +70,12 @@ function AdmBuildingDropdown(props) {
           );
         })}
       </Select>
+      </Grid>
+      <Grid item xs={6}>
+      {buildingId == null ? (<div></div>):( <EmailBtn buildingId={buildingId}/>)}
+      </Grid>
+
+        </Grid>
 
       {buildingId == null ? (
         <div></div>
@@ -75,7 +96,7 @@ function AdmBuildingDropdown(props) {
       </Grid>
       
           </Grid>
-          <EmailBtn buildingId={buildingId}/>
+         
           <br></br>
           <BuildingsLayout buildingId={buildingId} />
         </div>

@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import axios from '../../../../Uri';
 import MDButton from 'components/MDButton';
 
+
 function EmailBtn(props) {
     const emailHandler = () => {
         axios.get(`/guest/paymentRemainder/${props.buildingId}`)
@@ -19,7 +20,7 @@ function EmailBtn(props) {
                   size="small"
                   justify="center"
                   style={{ borderRadius: 10 }}
-                  onClick={emailHandler}>PAYMENT REMAINDERS
+                  onClick={emailHandler}>SEND DUE REMAINDERS
 
         </MDButton>
 
