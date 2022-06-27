@@ -72,7 +72,7 @@ function AdmBuildingDropdown(props) {
       </Select>
       </Grid>
       <Grid item xs={6}>
-      {buildingId == null ? (<div></div>):( <EmailBtn buildingId={buildingId}/>)}
+      {/* {buildingId == null ? (<div></div>):( <EmailBtn buildingId={buildingId}/>)} */}
       </Grid>
 
         </Grid>

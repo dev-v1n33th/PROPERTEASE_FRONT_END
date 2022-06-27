@@ -220,14 +220,14 @@ function InNotice() {
         //   return true;
         // },
       },
-      {
-        title: "Due Amount",
-        field: "dueAmount",
+      // {
+      //   title: "Due Amount",
+      //   field: "dueAmount",
   
-        headerStyle: {
-          backgroundColor: "#1E90FF",
-          color: "white",
-        },
+      //   headerStyle: {
+      //     backgroundColor: "#1E90FF",
+      //     color: "white",
+      //   },
     //     validate: (rowData) => {
     //       if (
     //         rowData.userPhoneNumber === undefined ||
@@ -245,7 +245,7 @@ function InNotice() {
     //       }
     //       return true;
     //     },
-     },
+    //  },
   ];
 
   useEffect(() => {

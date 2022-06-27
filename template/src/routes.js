@@ -19,6 +19,7 @@ import GuestReportMain from "./layouts/GuestReport/index"
 import ConfigSecurityDeposit from "./layouts/cofigSecurityDeposit/Components/ConfigSecurityDeposit"
 import ConfigSecurityDeposits from 'layouts/cofigSecurityDeposit/Components';
 import PastGuest from 'layouts/profile/indexforpastGuest';
+import PendingPayments from 'layouts/pendingPayments' ;
 const routes = [
 	{
 		type: 'collapse',
@@ -120,6 +121,14 @@ const routes = [
 		icon: <Icon fontSize="small">payments</Icon>,
 		route: '/allTransactions',
 		component: <AllTransactions />
+	},
+	{
+		type: 'collapse',
+		name: 'Pending Payments',
+		key: 'PendingPayments',
+		icon: <Icon fontSize="small">payments</Icon>,
+		route: '/pendingpayments',
+		component: <PendingPayments />
 	},
 	{
 		type: 'collapse',

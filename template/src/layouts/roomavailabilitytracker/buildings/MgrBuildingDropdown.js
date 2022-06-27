@@ -10,8 +10,21 @@ import PaymentSummaryChart from "./buildingspieCharts/paymentSummaryChart";
 import { Grid } from "@mui/material";
 import SummaryTable from "./buildingsSummaryTable/SummaryTable";
 import EmailBtn from "./EmailBtn/EmailBtn";
+import { makeStyles } from "@mui/styles";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 function MgrBuildingDropdown(props) {
+
+  const useStyles = makeStyles({
+    root: {
+      height: 35,
+    },
+    size: {
+      width: 40,
+      height: 30,
+    },
+  });
+  const classes= useStyles();
   const [selected, setSelected] = React.useState("");
   const [building, setBuilding] = React.useState([]);
   
@@ -36,6 +49,8 @@ function MgrBuildingDropdown(props) {
 
   return (
     <>
+    <Grid container>
+      <Grid item xs={6}>
       
       <label value="Select Building: ">Select Building: </label>
       <Select
@@ -43,6 +58,7 @@ function MgrBuildingDropdown(props) {
         style={{ width: "30%", height: "10%" }}
         defaultValue={building.buildingName}
         name="building"
+        IconComponent={()=> (<ArrowDropDownIcon className={classes.size}/>)}
       >
         
             <MenuItem
@@ -54,6 +70,11 @@ function MgrBuildingDropdown(props) {
             </MenuItem>
          
       </Select>
+      </Grid>
+      <Grid item xs={6}>
+      {/* {buildingId == null ? (<div></div>):( <EmailBtn buildingId={buildingId}/>)} */}
+      </Grid>
+      </Grid>
       {building.buildingName === selected ? (
         <Grid>
         <Grid container direction="row" justifyContent="left" alignItems="left">
@@ -64,7 +85,7 @@ function MgrBuildingDropdown(props) {
         <SummaryTable buildingId={buildingsId} />
         </Grid>
       </Grid>
-      <EmailBtn buildingId={buildingsId} />
+      {/* <EmailBtn buildingId={buildingsId} /> */}
       <br></br>
         <BuildingsLayout buildingId={buildingsId} /> 
         </Grid>
