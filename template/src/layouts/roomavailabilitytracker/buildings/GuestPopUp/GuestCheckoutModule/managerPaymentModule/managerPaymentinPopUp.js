@@ -7,6 +7,7 @@ import { Container, Grid, InputLabel } from "@mui/material";
 import MDTypography from "components/MDTypography";
 
 import { makeStyles } from "@mui/styles";
+import DateTimePicker from "../../../../../profile/GuestLoginForm/components/DataTimePicker";
 
 import Textfield from "layouts/profile/GuestLoginForm/components/TextField";
 import Select from "layouts/profile/GuestLoginForm/components/Select";
@@ -87,6 +88,7 @@ const ManagerPaymentsinPopup = (props) => {
     guestId: GuestID,
     occupancyType: occupancyType,
     createdBy: userId,
+    transactionDate:""
   };
 
   const classes = useStyles();
@@ -133,14 +135,26 @@ const ManagerPaymentsinPopup = (props) => {
             >
               {(formProps) => (
                 <Form>
-                  <Grid container spacing={3}>
-                    <Grid item xs={5}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <h5>Refund Amount</h5>
                       <Textfield name="refundAmount" label="Refund Amount" />
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
+                      <h5>Transaction Id</h5>
                       <Textfield name="transactionId" label="Transaction ID" />
                     </Grid>
-                    <Grid item xs={2} sx={{ marginTop: 0.5 }} width={100}>
+                    <Grid item xs={6}>
+                        <h5>Transcation Date </h5>
+                        <DateTimePicker
+                        // label="Transaction Date"
+                          maxdate={new Date()}
+                          name="transactionDate"
+                          //label="Date of Birth"
+                          required
+                        />
+                      </Grid>
+                    <Grid item xs={6} sx={{ marginTop: 2 }} >
                       <Button 
                        >
                         REFUND

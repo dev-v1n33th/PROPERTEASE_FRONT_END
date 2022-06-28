@@ -11,12 +11,13 @@ import MDTypography from "components/MDTypography";
 import Textfield from "layouts/profile/GuestLoginForm/components/TextField";
 import Select from "layouts/profile/GuestLoginForm/components/Select";
 import Purpose from "./Purpose";
-
+import DateTimePicker from "../../../../../profile/GuestLoginForm/components/DataTimePicker";
 import Button from "layouts/profile/GuestLoginForm/components/Button";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Backdrop,CircularProgress } from "@mui/material";
 import "./GuestPaymentsinPopUp.css";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const useStyles = makeStyles({
   root: {
@@ -84,7 +85,8 @@ const GuestpaymentsinPopUp = (props) => {
     guestId: GuestID,
     createdBy : userId,
     occupancyType : GuestOccupancyType,
-    buildingId:buildingId
+    buildingId:buildingId,
+    transactionDate:""
   };
 
   const classes = useStyles();
@@ -135,31 +137,51 @@ const GuestpaymentsinPopUp = (props) => {
                 <Form>
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
-                      <Textfield name="amountPaid" label="Amount Paid" />
+                      <h5>Amount Paid</h5>
+                      <Textfield name="amountPaid"  />
                     </Grid>
                     <Grid item xs={6}>
-                      <Textfield name="transactionId" label="Transaction ID" />
+                      <h5>Transation Id</h5>
+                      <Textfield name="transactionId"  />
                     </Grid>
 
                     <Grid item xs={6}>
-                      <InputLabel id="demo-simple-select-label">
+                      <h5>Payment Purpose</h5>
+                      {/* <InputLabel id="demo-simple-select-label">
                         &nbsp; Payment Purpose
-                      </InputLabel>
+                      </InputLabel> */}
 
                       <Select
-                        // IconComponent={(Purpose) => (
-                        //   <ArrowDropDownIcon className={classes.size} />
-                        // )}
+                        IconComponent={() => (
+                          <ArrowDropDownIcon className={classes.size} />
+                        )}
                         name = "paymentPurpose"
                         options = {Purpose}
                         className={classes.root}
                       />
                     </Grid>
+                   
+                    <Grid item xs={6}>
+                        <h5>Transcation Date </h5>
+                        <DateTimePicker
+                        // label="Transaction Date"
+                          maxdate={new Date()}
+                          name="transactionDate"
+                          //label="Date of Birth"
+                          required
+                        />
+                      </Grid>
+                  
+                    
 
-                    <Grid item xs={6} sx={{ marginTop: 2 }}>
-                      <Button  disabled={disableButtons} onClick={()=>{setDisableButtons(true)}}>Record Payment</Button>
+
+                    <Grid item xs={12} sx={{ marginTop: 2 }} >
+                     
+                        <Button style={{align: "center"}} disabled={disableButtons} onClick={()=>{setDisableButtons(true)}}>Record Payment</Button>
+                      
                     </Grid>
                   </Grid>
+                  
                   <ToastContainer  maxWidth="sx"
                position="top-right"
                autoClose={3000}
