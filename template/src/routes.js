@@ -20,6 +20,7 @@ import ConfigSecurityDeposit from "./layouts/cofigSecurityDeposit/Components/Con
 import ConfigSecurityDeposits from 'layouts/cofigSecurityDeposit/Components';
 import PastGuest from 'layouts/profile/indexforpastGuest';
 import PendingPayments from 'layouts/pendingPayments' ;
+import ConfigRentsIndex from 'layouts/configRents';
 const routes = [
 	{
 		type: 'collapse',
@@ -145,6 +146,14 @@ const routes = [
 		icon:<Icon fontSize="small">send</Icon>,
 		route:'/configure',
 		component:<ConfigSecurityDeposits />
+	},
+	{
+		type: 'collapse',
+		name: 'Configure Rents',
+		key:'configRents',
+		icon:<Icon fontSize="small">send</Icon>,
+		route:'/configRents',
+		component:<ConfigRentsIndex />
 	},
 	// {
 	// 	type: 'collapse',
