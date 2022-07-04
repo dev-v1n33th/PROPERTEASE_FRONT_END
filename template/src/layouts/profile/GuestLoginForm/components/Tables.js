@@ -161,8 +161,8 @@ export default function Tables(props) {
           }}
         />
         <div style={{ marginTop: "40px" }}>
-          You have selected: {selectedRow[0].sharing} and Rent{"  "}
-          {selectedRow[0].value}
+          You have selected: {selectedRow[0].sharing}  sharing room and rent of the that room was{"  "}
+          &#8377; {selectedRow[0].price} 
         </div>
       </Grid>
     </div>
