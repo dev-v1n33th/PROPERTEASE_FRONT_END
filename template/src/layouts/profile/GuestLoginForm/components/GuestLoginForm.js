@@ -19,7 +19,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import CustomizedButtons from "./OccupancyButton";
+import { Table } from "react-bootstrap";
 const useStyles = makeStyles({
   root: {
     height: 35,
@@ -29,6 +30,9 @@ const useStyles = makeStyles({
     height: 30,
   },
 });
+
+const regular = "regular";
+
 var bid = null;
 const INITIAL_FORM_STATE = {
   firstName: "",
@@ -71,16 +75,15 @@ const FORM_VALIDATION = Yup.object().shape({
     .required("Required"),
   fatherName: Yup.string().matches(/^[aA-zZ\s]+$/, "Invalid LastName "),
   email: Yup.string().email("Invalid email.").required("Required"),
-  dateOfBirth: Yup.date()
+  dateOfBirth: Yup.date(),
 
-    // .test(
-    //   "DOB",
-    //   "Please choose a valid date of birth",
-    //   (date) =>
-    //     moment().diff(moment(date), "years") >= 12 &&
-    //     moment().diff(moment(date), "years") <= 80
-    // )
-    ,
+  // .test(
+  //   "DOB",
+  //   "Please choose a valid date of birth",
+  //   (date) =>
+  //     moment().diff(moment(date), "years") >= 12 &&
+  //     moment().diff(moment(date), "years") <= 80
+  // )
   bloodGroup: Yup.string().matches(/^(A|B|AB|O)[+-]$/, {
     message: "Please enter valid Blood Group.",
     excludeEmptyString: false,
@@ -124,7 +127,7 @@ const FORM_VALIDATION = Yup.object().shape({
     .matches(/^[aA-zZ\s]+$/, "Invalid State ")
     .required("Required"),
   buildingId: Yup.number().required("Required"),
-  occupancyType: Yup.string().required("Required"),
+  // occupancyType: Yup.string().required("Required"),
   amountPaid: Yup.number().required("Required"),
   transactionId: Yup.string()
     .test(
@@ -142,7 +145,10 @@ const FORM_VALIDATION = Yup.object().shape({
 
 console.log(JSON.parse(sessionStorage.getItem("userdata")));
 
-const GuestLoginForm = () => {
+const GuestLoginForm = (props) => {
+  function getOccupencyType(data) {
+    console.log(data);
+  }
   const [building, setBuilding] = React.useState([]);
   const [oneBuilding, setoneBuilding] = React.useState([]);
   const [bed, setBed] = React.useState([]);
@@ -153,10 +159,45 @@ const GuestLoginForm = () => {
   const [amountTooPay, setAmountToPay] = React.useState([]);
   const [occtype, setOcctype] = React.useState([]);
   const [amt, setAmt] = React.useState([]);
-  const [secureDepo, setSecureDepo] = React.useState([]);
+  const [secureDepo, setSecureDepo] = React.useState();
   const [buildId, setBuildId] = React.useState("");
   const [file, setFile] = useState(null);
   const [open, setOpen] = React.useState(false);
+  const [rentAmount, setRentAmount] = React.useState({});
+  const [occupancyObject, setOccupancyObject] = React.useState({});
+  const [occupancyType, setOccupancyType] = React.useState({});
+
+  const [totalRent, setTotalRent] = useState("");
+  const getAmount = (data) => {
+    console.log("amount" + data.securityDeposit);
+    // setRentAmount(data);
+    //  setOccupancyObject(data)
+    setSecureDepo(data.securityDeposit);
+    setRentAmount(data.defaultRent);
+    setOccupancyType(data.occupancyType);
+  };
+  console.log(occupancyType);
+
+  console.log(regular);
+  console.log(rentAmount);
+  console.log(secureDepo);
+
+  // console.log(Total);
+  let RegularTotal;
+  RegularTotal = rentAmount + secureDepo;
+  let NonRegularTotal;
+  NonRegularTotal = rentAmount;
+  let TotalRent;
+
+  if (occupancyType === regular) {
+    // RegularTotal;
+    TotalRent = RegularTotal;
+    console.log(TotalRent);
+  } else {
+    TotalRent = NonRegularTotal;
+    console.log(TotalRent);
+  }
+  console.log(TotalRent);
 
   const handleClose = () => {
     setOpen(false);
@@ -175,6 +216,7 @@ const GuestLoginForm = () => {
   let userType = userData.data.userType;
   var userID = userData.data.userId;
 
+  console.log(userBuildingId)
   function securityDepoist() {
     axios
       .get("guest/getSecurityDepositByOccupencyType/Regular")
@@ -192,6 +234,7 @@ const GuestLoginForm = () => {
           if (userBuildingId === data.buildingId) {
             console.log("this is manager");
             buildingNamesArray.push(data.buildingName);
+
             console.log(buildingNamesArray);
           }
           // else if (userBuildingId === 0) {
@@ -233,6 +276,7 @@ const GuestLoginForm = () => {
       setBuildId(bid);
     }
 
+    console.log(buildId);
     const bool = oneBuilding.filter(
       (buildingData) => buildingData.buildingName == id.target.outerText
     );
@@ -264,24 +308,27 @@ const GuestLoginForm = () => {
       .then((rse) => {
         setSecureDepo(rse.data.securityDepositAmount);
         console.log(rse.data.securityDepositAmount);
-        if (i.target.outerText == "Daily") {
-          setDuration(days);
-          var checkInAmount =
-            amt * (defaultRentofBed + rse.data.securityDepositAmount);
-          setAmountToPay(checkInAmount);
-        } else if (i.target.outerText == "Monthly") {
-          setDuration(months);
-          var checkInAmount = defaultRentofBed + rse.data.securityDepositAmount;
-          setAmountToPay(checkInAmount);
-        } else {
-          setDuration(empty);
-          var checkInAmount = defaultRentofBed + rse.data.securityDepositAmount;
-          setAmountToPay(checkInAmount);
-        }
+        // if (i.target.outerText == "Daily") {
+        //   setDuration(days);
+        //   var checkInAmount =
+        //     amt * (defaultRentofBed + rse.data.securityDepositAmount);
+        //   setAmountToPay(checkInAmount);
+        // } else if (i.target.outerText == "Monthly") {
+        //   setDuration(months);
+        //   var checkInAmount = defaultRentofBed + rse.data.securityDepositAmount;
+        //   setAmountToPay(checkInAmount);
+        // } else {
+        //   setDuration(empty);
+        //   var checkInAmount = defaultRentofBed + rse.data.securityDepositAmount;
+        //   setAmountToPay(checkInAmount);
+        // }
+        setAmountToPay(TotalRent);
       })
       .catch((error) => {
         toast.error("Something went wrong");
       });
+
+    console.log(amountTooPay);
 
     setOcctype(i.target.outerText);
   };
@@ -305,24 +352,43 @@ const GuestLoginForm = () => {
   const obj = { bedId: bed };
   const OnBoarding = "OnBoarding";
   const obj4 = { createdBy: userID };
-  const objee = { defaultRent: rent };
+  const objee = { defaultRent: rentAmount };
   const obj1 = { securityDeposit: secureDepo };
-  const obj2 = { amountToBePaid: amountTooPay };
+  const obj2 = { amountToBePaid: TotalRent };
   const obj3 = { paymentPurpose: OnBoarding };
   const obj5 = { buildingId: buildId };
-  const amountNeedToPay = (n) => { };
+  const obj6={occupancyType:occupancyType}
+  const amountNeedToPay = (n) => {};
 
   function handleChooseGuestPicture(event) {
-
-    setFile(event.target.files[0])
-    console.log(event.target.files[0])
+    setFile(event.target.files[0]);
+    console.log(event.target.files[0]);
     if (event.target.files[0].size >= 1000000) {
-      toast.warning("Please select file with less than 1 MB")
+      toast.warning("Please select file with less than 1 MB");
     }
-
   }
   return (
     <div>
+      {/* <Typography>
+        <br />
+        <h4 align="center">Occupancy Type</h4>
+        <br />
+      </Typography>
+      <Grid item xs={12} paddingLeft={0} paddingTop={2}>
+        <CustomizedButtons func={getAmount} />
+      </Grid> */}
+
+      <Typography>
+        <br />
+        <h4 style={{ paddingLeft: "525px" }}>Occupancy Type</h4>
+        <br />
+      </Typography>
+      <Grid item xs={12} paddingLeft={-4} paddingTop={2}>
+        <div>
+          <CustomizedButtons func={getAmount} buildingId={userBuildingId} />
+        </div>
+      </Grid>
+
       <Grid container onClick={handleClose}>
         <Grid item xs={12}>
           <Container maxWidth="md">
@@ -340,59 +406,58 @@ const GuestLoginForm = () => {
                   const guestdata1 = Object.assign(gusting1, obj2);
                   const guestdata2 = Object.assign(guestdata1, obj4);
                   const guestdata3 = Object.assign(guestdata2, obj5);
-                  const guestdata = Object.assign(guestdata3, obj3);
+                  const guestdata4= Object.assign(guestdata3, obj3);
+                  const guestdata = Object.assign(guestdata4,obj6)
 
-                
-
+                console.log(guestdata)
                   try {
-                    if (guestdata.amountPaid == amountTooPay) {
-                      const res = await axios.post("/guest/addGuest",guestdata)
-                                            .then((res) => {if (res.data.id !== null) {
-                                              handleClose();
-                                              toast.success(" Guest onboarded successfully");
-                                              resetForm();
-                                              const url = `guest/upload/${res.data.id}/`;
-                                              const formData = new FormData();
-                                              if(file !== null){
-                                              console.log(file)
-                                              formData.append("file", file);
-                                              formData.append("fileName", file.name);
-                                             
-                                              const config = {
-                                                headers: {
-                                                  "content-type": "multipart/form-data",
-                                                },
-                                              };
-                                              console.log(formData);
-                                              console.log(config);
-                                              
-                                              axios
-                                                .post(url, formData, config)
-                                                .then((response) => {
-                                                  console.log(response.data);
-                                                  toast.success("guest picture uploaded successfully")
-                      
-                      
-                                                }).catch((error) => {
-                                                  console.log(error);
-                                                  // toast.warning("File s")
-                                                  console.log("Not uploaded")
-                      
-                                                })
-                                              }else{
-                                                // toast.warning(" Picture is Not Uploaded")
-                                              }
-                      
-                                            }else{
-                                              console.log('heeeeeeeeeeeeeeeyyyyyyyyyyyy')
-                                              
-                                            }})
-                      
+                    if (guestdata.amountPaid == TotalRent) {
+                      const res = await axios
+                        .post("/guest/addGuest", guestdata)
+                        .then((res) => {
+                          if (res.data.id !== null) {
+                            handleClose();
+                            toast.success(" Guest onboarded successfully");
+                            resetForm();
+                            const url = `guest/upload/${res.data.id}/`;
+                            const formData = new FormData();
+                            if (file !== null) {
+                              console.log(file);
+                              formData.append("file", file);
+                              formData.append("fileName", file.name);
+
+                              const config = {
+                                headers: {
+                                  "content-type": "multipart/form-data",
+                                },
+                              };
+                              console.log(formData);
+                              console.log(config);
+
+                              axios
+                                .post(url, formData, config)
+                                .then((response) => {
+                                  console.log(response.data);
+                                  toast.success(
+                                    "guest picture uploaded successfully"
+                                  );
+                                })
+                                .catch((error) => {
+                                  console.log(error);
+                                  // toast.warning("File s")
+                                  console.log("Not uploaded");
+                                });
+                            } else {
+                              // toast.warning(" Picture is Not Uploaded")
+                            }
+                          } else {
+                            console.log("heeeeeeeeeeeeeeeyyyyyyyyyyyy");
+                          }
+                        });
                     } else {
                       handleClose();
                       toast.error(" Need to pay full Amount");
                     }
-
                   } catch (error) {
                     console.log(error);
                     handleClose();
@@ -415,6 +480,7 @@ const GuestLoginForm = () => {
                         </InputLabel>
                         <br />
                       </Grid>
+
                       {userType !== "manager" ? (
                         <Grid item xs={6}>
                           <h6>Select Building *</h6>
@@ -463,12 +529,13 @@ const GuestLoginForm = () => {
                           onClick={selectBed}
                         ></Select>
                       </Grid>
-                      <Grid item xs={6}>
-                        {/* <InputLabel id="demo-simple-select-labe">
+
+                      {/* <Grid item xs={6}> */}
+                      {/* <InputLabel id="demo-simple-select-labe">
                           {" "}
                           OccupancyType *
                         </InputLabel> */}
-                        <h6>OccupancyType *</h6>
+                      {/* <h6>OccupancyType *</h6>
                         <Select
                           IconComponent={() => (
                             <ArrowDropDownIcon className={classes.size} />
@@ -478,9 +545,9 @@ const GuestLoginForm = () => {
                           options={Occupancytype}
                           onClick={occupency}
                         />
-                      </Grid>
+                      </Grid> */}
 
-                      {occtype === "Daily" || occtype === "Monthly" ? (
+                      {/* {occtype === "Daily" || occtype === "Monthly" ? (
                         <Grid item xs={6}>
                           <h6>Duration*</h6>
                           <Select
@@ -495,18 +562,18 @@ const GuestLoginForm = () => {
                         </Grid>
                       ) : (
                         <Grid item xs={6}></Grid>
-                      )}
+                      )} */}
 
-                      <Grid item xs={6}>
+                      {/* <Grid item xs={6}>
                         <h6>Security Deposit</h6>
                         <Textfield
                           name="securityDeposit"
                           //label="Security Deposit"
                           value={secureDepo}
                         />
-                      </Grid>
+                      </Grid> */}
 
-                      <Grid item xs={6}></Grid>
+                      {/* <Grid item xs={6}></Grid>
                       <Grid item xs={6}>
                         <h6>Default Rent</h6>
                         <Textfield
@@ -514,8 +581,7 @@ const GuestLoginForm = () => {
                           // label="Default Rent"
                           value={defaultRentofBed}
                         />
-                      </Grid>
-                      <Grid item xs={6}></Grid>
+                      </Grid> */}
                       <Grid item xs={6}>
                         <h6>Amount To Be Paid</h6>
                         <Textfield
@@ -524,6 +590,7 @@ const GuestLoginForm = () => {
                           value={amountTooPay}
                         />
                       </Grid>
+                      <Grid item xs={6}></Grid>
                       <Grid item xs={12}>
                         <Typography>
                           <br />
@@ -605,21 +672,21 @@ const GuestLoginForm = () => {
                         <h6>Secondary Phone</h6>
                         <Textfield
                           name="secondaryPhoneNumber"
-                        //label="Secondary Phone"
+                          //label="Secondary Phone"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Father's Name</h6>
                         <Textfield
                           name="fatherName"
-                        //label="Father's Name"
+                          //label="Father's Name"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Father's Phone</h6>
                         <Textfield
                           name="fatherNumber"
-                        //label="Father's Phone"
+                          //label="Father's Phone"
                         />
                       </Grid>
 
@@ -627,14 +694,14 @@ const GuestLoginForm = () => {
                         <h6>Blood Group</h6>
                         <Textfield
                           name="bloodGroup"
-                        //label="Blood Group"
+                          //label="Blood Group"
                         />
                       </Grid>
                       <Grid item xs={6}>
                         <h6>Occupation</h6>
                         <Textfield
                           name="occupation"
-                        //label="Occupation"
+                          //label="Occupation"
                         />
                       </Grid>
                       <br />
@@ -693,7 +760,7 @@ const GuestLoginForm = () => {
                         <h6>Address Line 2</h6>
                         <Textfield
                           name="addressLine2"
-                        //label="Address Line 2"
+                          //label="Address Line 2"
                         />
                       </Grid>
                       <Grid item xs={6}>
