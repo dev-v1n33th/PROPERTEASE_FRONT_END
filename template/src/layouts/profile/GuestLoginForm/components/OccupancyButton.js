@@ -31,7 +31,9 @@ const BootstrapButton = styled(Button)({
   boxShadow: "none",
   textTransform: "none",
   fontSize: 16,
-  padding: "20px 48px",
+//   width:65,
+//   height:45,
+//   padding: "25px 68px",
   border: "1px solid",
   lineHeight: 1.9,
   variant: "contained",
@@ -65,10 +67,10 @@ const BootstrapButton = styled(Button)({
     boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
   },
 });
-
+var totalRentForRegular = 0;
+var totalRentForMonOrDaily = 0;
 export default function CustomizedButtons(props) {
-  var totalRentForRegular = 0;
-  var totalRentForMonOrDaily = 0;
+
   //sending props to parent function
   // props.func(rentAmount);
   //use
@@ -131,9 +133,9 @@ console.log(rentData)
         xs={12}
         style={{
           align: "center",
-          marginLeft: 7,
-          marginRight: 240,
-          marginLeft: 150,
+        //   marginLeft: 7,
+          marginRight: 200,
+         marginLeft: 180,
           width: "69%",
           paddingTop: 20,
         }}
@@ -147,6 +149,8 @@ console.log(rentData)
                   disableRipple
                   value="regular"
                   onClick={(e) => setOccupancyType(e.target.value)}
+                  style={{width: '100%', height: '100%'}}
+
                 >
                   Regular
                 </BootstrapButton>
@@ -161,8 +165,10 @@ console.log(rentData)
                     setOccupancyType(e.target.value)
                 }
                 }
+                style={{width: '100%', height: '100%'}}
+
                 >
-                  Monthly
+                  One Month
                 </BootstrapButton>
               </Grid>
               <Grid item xs={4}>
@@ -171,6 +177,7 @@ console.log(rentData)
                   disableRipple
                   value="daily"
                   onClick={(e) => setOccupancyType(e.target.value)}
+style={{width: '100%', height: '100%'}}
                 >
                   Daily
                 </BootstrapButton>

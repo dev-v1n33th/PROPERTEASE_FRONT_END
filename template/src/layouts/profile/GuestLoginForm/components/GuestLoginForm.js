@@ -378,12 +378,15 @@ const GuestLoginForm = (props) => {
         <CustomizedButtons func={getAmount} />
       </Grid> */}
 
-      <Typography>
-        <br />
-        <h4 style={{ paddingLeft: "525px" }}>Occupancy Type</h4>
-        <br />
-      </Typography>
-      <Grid item xs={12} paddingLeft={-4} paddingTop={2}>
+
+        <Typography>
+                          <br />
+                          <h4 align="center">Occupancy Type</h4>
+                          <br />
+                        </Typography>       
+                         {/* <h4 style={{ paddingLeft: "525px" }}>Occupancy Type</h4> */}
+
+      <Grid item xs={12} paddingTop={2}>
         <div>
           <CustomizedButtons func={getAmount} buildingId={userBuildingId} />
         </div>
@@ -582,14 +585,14 @@ const GuestLoginForm = (props) => {
                           value={defaultRentofBed}
                         />
                       </Grid> */}
-                      <Grid item xs={6}>
+                      {/* <Grid item xs={6}>
                         <h6>Amount To Be Paid</h6>
                         <Textfield
                           name="amountToBePaid"
                           //label="Amount To Be Paid"
                           value={amountTooPay}
                         />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={6}></Grid>
                       <Grid item xs={12}>
                         <Typography>
