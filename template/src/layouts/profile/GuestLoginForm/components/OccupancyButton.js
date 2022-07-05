@@ -95,7 +95,7 @@ console.log(rentData)
   // console.log(rentAmount)
 
   //props.func(occupancyType)
-
+//-------------------------------------------
   const [totalRent, setTotalRent] = useState(0);
   console.log(props.selectedRow);
   //   if(occupancyType=="regular")
