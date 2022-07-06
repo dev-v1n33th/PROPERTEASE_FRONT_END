@@ -32,8 +32,10 @@ const useStyles = makeStyles({
 });
 
 const regular = "regular";
+const OneMonth = "OneMonth";
+const daily = "daily";
 
-var bid = null;
+let bid = null;
 const INITIAL_FORM_STATE = {
   firstName: "",
   lastName: "",
@@ -64,6 +66,7 @@ const INITIAL_FORM_STATE = {
   defaultRent: "",
   securityDeposit: "",
   checkinNotes: "",
+  checkInDate: "",
 };
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -76,6 +79,7 @@ const FORM_VALIDATION = Yup.object().shape({
   fatherName: Yup.string().matches(/^[aA-zZ\s]+$/, "Invalid LastName "),
   email: Yup.string().email("Invalid email.").required("Required"),
   dateOfBirth: Yup.date(),
+  checkInDate: Yup.date(),
 
   // .test(
   //   "DOB",
@@ -175,6 +179,7 @@ const GuestLoginForm = (props) => {
     setSecureDepo(data.securityDeposit);
     setRentAmount(data.defaultRent);
     setOccupancyType(data.occupancyType);
+    setDuration(data.duration);
   };
   console.log(occupancyType);
 
@@ -185,17 +190,20 @@ const GuestLoginForm = (props) => {
   // console.log(Total);
   let RegularTotal;
   RegularTotal = rentAmount + secureDepo;
-  let NonRegularTotal;
-  NonRegularTotal = rentAmount;
+  let oneMonthTotal;
+  oneMonthTotal = rentAmount;
+  let dailyTotal = rentAmount * duration;
   let TotalRent;
 
   if (occupancyType === regular) {
     // RegularTotal;
     TotalRent = RegularTotal;
     console.log(TotalRent);
-  } else {
-    TotalRent = NonRegularTotal;
+  } else if (occupancyType === OneMonth) {
+    TotalRent = oneMonthTotal;
     console.log(TotalRent);
+  } else {
+    TotalRent = dailyTotal;
   }
   console.log(TotalRent);
 
@@ -216,7 +224,7 @@ const GuestLoginForm = (props) => {
   let userType = userData.data.userType;
   var userID = userData.data.userId;
 
-  console.log(userBuildingId)
+  console.log(userBuildingId);
   function securityDepoist() {
     axios
       .get("guest/getSecurityDepositByOccupencyType/Regular")
@@ -357,7 +365,7 @@ const GuestLoginForm = (props) => {
   const obj2 = { amountToBePaid: TotalRent };
   const obj3 = { paymentPurpose: OnBoarding };
   const obj5 = { buildingId: buildId };
-  const obj6={occupancyType:occupancyType}
+  const obj6 = { occupancyType: occupancyType };
   const amountNeedToPay = (n) => {};
 
   function handleChooseGuestPicture(event) {
@@ -369,24 +377,12 @@ const GuestLoginForm = (props) => {
   }
   return (
     <div>
-      {/* <Typography>
+      <Typography>
         <br />
-        <h4 align="center">Occupancy Type</h4>
+        <h4 style={{ paddingLeft: "525px" }}>Occupancy Type</h4>
         <br />
       </Typography>
-      <Grid item xs={12} paddingLeft={0} paddingTop={2}>
-        <CustomizedButtons func={getAmount} />
-      </Grid> */}
-
-
-        <Typography>
-                          <br />
-                          <h4 align="center">Occupancy Type</h4>
-                          <br />
-                        </Typography>       
-                         {/* <h4 style={{ paddingLeft: "525px" }}>Occupancy Type</h4> */}
-
-      <Grid item xs={12} paddingTop={2}>
+      <Grid item xs={12} paddingLeft={-4} paddingTop={2}>
         <div>
           <CustomizedButtons func={getAmount} buildingId={userBuildingId} />
         </div>
@@ -409,10 +405,10 @@ const GuestLoginForm = (props) => {
                   const guestdata1 = Object.assign(gusting1, obj2);
                   const guestdata2 = Object.assign(guestdata1, obj4);
                   const guestdata3 = Object.assign(guestdata2, obj5);
-                  const guestdata4= Object.assign(guestdata3, obj3);
-                  const guestdata = Object.assign(guestdata4,obj6)
+                  const guestdata4 = Object.assign(guestdata3, obj3);
+                  const guestdata = Object.assign(guestdata4, obj6);
 
-                console.log(guestdata)
+                  console.log(guestdata);
                   try {
                     if (guestdata.amountPaid == TotalRent) {
                       const res = await axios
@@ -532,7 +528,15 @@ const GuestLoginForm = (props) => {
                           onClick={selectBed}
                         ></Select>
                       </Grid>
-
+                      <Grid item xs={6}>
+                        <h6>CheckIn Date* </h6>
+                        <DateTimePicker
+                          maxdate={new Date()}
+                          name="checkInDate"
+                          //label="Date of Birth"
+                          required
+                        />
+                      </Grid>
                       {/* <Grid item xs={6}> */}
                       {/* <InputLabel id="demo-simple-select-labe">
                           {" "}
@@ -585,15 +589,6 @@ const GuestLoginForm = (props) => {
                           value={defaultRentofBed}
                         />
                       </Grid> */}
-                      {/* <Grid item xs={6}>
-                        <h6>Amount To Be Paid</h6>
-                        <Textfield
-                          name="amountToBePaid"
-                          //label="Amount To Be Paid"
-                          value={amountTooPay}
-                        />
-                      </Grid> */}
-                      <Grid item xs={6}></Grid>
                       <Grid item xs={12}>
                         <Typography>
                           <br />
@@ -654,7 +649,7 @@ const GuestLoginForm = (props) => {
                         />
                       </Grid>
                       <Grid item xs={6}>
-                        <h6>Date of Birth </h6>
+                        <h6>Date of Birth *</h6>
                         <DateTimePicker
                           maxdate={new Date()}
                           name="dateOfBirth"

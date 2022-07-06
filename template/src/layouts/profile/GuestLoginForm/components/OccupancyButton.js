@@ -6,6 +6,10 @@ import { purple } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { makeStyles } from "@mui/styles";
+import days from "./Days";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import FormControl from "@mui/material/FormControl";
 //import { DataGrid } from "@mui/x-data-grid";
 
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -31,9 +35,7 @@ const BootstrapButton = styled(Button)({
   boxShadow: "none",
   textTransform: "none",
   fontSize: 16,
-//   width:65,
-//   height:45,
-//   padding: "25px 68px",
+//   padding: "20px 48px",
   border: "1px solid",
   lineHeight: 1.9,
   variant: "contained",
@@ -67,45 +69,63 @@ const BootstrapButton = styled(Button)({
     boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
   },
 });
-var totalRentForRegular = 0;
-var totalRentForMonOrDaily = 0;
+
 export default function CustomizedButtons(props) {
-
-  //sending props to parent function
-  // props.func(rentAmount);
-  //use
-  const [securityDeposit, setSecurityDeposit] = useState();
+  let totalRentForRegular = 0;
+  let totalRentForOneMonth = 0;
+  let totalRentForDaily=0;
   const [selectedRow, setSelectedRow] = useState();
-  const[rentData,setRentData] = useState([]);
-  console.log(props.buildingId)
+  const [rentData, setRentData] = useState([]);
+  const[dailyData,setDailyData]=useState([]);
+  const[monthlyData,setMonthlyData]=useState([])
+  const [duration, setDuration] = useState();
   const [occupancyType, setOccupancyType] = useState("");
-  useEffect(() => {
-    let url=`guest/getRatesByBuildingId/1/${occupancyType}`;
-    axios.get(url).then((res)=>{
-        console.log(res.data)
-        setRentData(res.data)
-    }).catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong🤦‍♂️")
-      });
-  },[])
-console.log(rentData)
+  const [securityDeposit, setSecurityDeposit] = useState();
 
-  //   const[rentAmount, setRentAmount] = useState();
-  // console.log(rentAmount)
+    useEffect(() => {
+      let url = `guest/getRatesByBuildingId/${props.buildingId}/regular`;
+      axios
+        .get(url)
+        .then((res) => {
+          console.log(res.data);
+          setRentData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something went wrong🤦‍♂️");
+        });
+        let url2 = `guest/getRatesByBuildingId/${props.buildingId}/daily`;
+        axios
+          .get(url2)
+          .then((res) => {
+            console.log(res.data);
+            setDailyData(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+            toast.error("Something went wrong🤦‍♂️");
+          });
+          let url3 = `guest/getRatesByBuildingId/${props.buildingId}/OneMonth`;
+          axios
+            .get(url3)
+            .then((res) => {
+              console.log(res.data);
+              setMonthlyData(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+              toast.error("Something went wrong🤦‍♂️");
+            });
+    }, [1]);
 
-  //props.func(occupancyType)
-//-------------------------------------------
-  const [totalRent, setTotalRent] = useState(0);
-  console.log(props.selectedRow);
-  //   if(occupancyType=="regular")
-  //   {
-  //     setTotalRent(securityDeposit+selectedRow)
-  //   }
-  console.log(totalRent);
-  var value = null;
-  const monthlySec = 0;
-  console.log(value);
+
+  const handleChange = (event) => {
+    setDuration(event.target.value);
+  };
+  const handleChangeSecurityDeposit = (event) => {
+    setSecurityDeposit(event.target.value);
+  };
+
 
   const getSec = (data) => {
     console.log("hgf" + data);
@@ -117,15 +137,21 @@ console.log(rentData)
     setSelectedRow(data);
   };
 
+  //calculating rent amount for total
+  const monthlySec = 0;
   totalRentForRegular = selectedRow + securityDeposit;
-  totalRentForMonOrDaily = selectedRow + monthlySec;
+  totalRentForOneMonth= selectedRow+monthlySec;
+  totalRentForDaily = (selectedRow + monthlySec)*duration;
+
+  //sending this object as prop to parent component guest onboarding form
   const occupancyObject = {
     occupancyType: occupancyType,
     defaultRent: selectedRow,
     securityDeposit: securityDeposit,
+    duration:duration
   };
-  console.log(occupancyObject);
-   props.func(occupancyObject)
+  props.func(occupancyObject);
+
   return (
     <>
       <Grid
@@ -133,9 +159,9 @@ console.log(rentData)
         xs={12}
         style={{
           align: "center",
-        //   marginLeft: 7,
-          marginRight: 200,
-         marginLeft: 180,
+          marginLeft: 7,
+          marginRight: 240,
+          marginLeft: 150,
           width: "69%",
           paddingTop: 20,
         }}
@@ -148,9 +174,10 @@ console.log(rentData)
                   variant="contained"
                   disableRipple
                   value="regular"
-                  onClick={(e) => setOccupancyType(e.target.value)}
                   style={{width: '100%', height: '100%'}}
-
+                  onClick={(e) => {
+                    setOccupancyType(e.target.value);
+                  }}
                 >
                   Regular
                 </BootstrapButton>
@@ -160,13 +187,11 @@ console.log(rentData)
                 <BootstrapButton
                   variant="contained"
                   disableRipple
-                  value="monthly"
+                  style={{width: '100%', height: '100%'}}
+                  value="OneMonth"
                   onClick={(e) => {
-                    setOccupancyType(e.target.value)
-                }
-                }
-                style={{width: '100%', height: '100%'}}
-
+                    setOccupancyType(e.target.value);
+                  }}
                 >
                   One Month
                 </BootstrapButton>
@@ -175,9 +200,11 @@ console.log(rentData)
                 <BootstrapButton
                   variant="contained"
                   disableRipple
+                  style={{width: '100%', height: '100%'}}
                   value="daily"
-                  onClick={(e) => setOccupancyType(e.target.value)}
-style={{width: '100%', height: '100%'}}
+                  onClick={(e) => {
+                    setOccupancyType(e.target.value);
+                  }}
                 >
                   Daily
                 </BootstrapButton>
@@ -189,36 +216,40 @@ style={{width: '100%', height: '100%'}}
         <Grid item xs={12}>
           {occupancyType == "regular" ? (
             <div style={{ width: "100%", paddingTop: 50 }}>
-              <Tables func={getRow}  occupancyType={occupancyType} buildingId={props.buildingId} tableData={rentData} />
+
+              <Tables
+                func={getRow}
+                occupancyType={occupancyType}
+                buildingId={props.buildingId}
+                tableData={rentData}
+              />
               <br />
-              <SecurityDepo func={getSec} />
-            </div>
-          ) : (
-            <div></div>
-          )}
-          {occupancyType == "monthly" ? (
-            <div style={{ paddingTop: 50 }}>
-              <Tables func={getRow}  occupancyType={occupancyType} buildingId={props.buildingId} tableData={rentData}/>
-            </div>
-          ) : (
-            <div></div>
-          )}
-          {occupancyType == "daily" ? (
-            <div
-              style={{
-                paddingTop: 50,
-              }}
-            >
-              <Tables func={getRow}  occupancyType={occupancyType} buildingId={props.buildingId} tableData={rentData}/>
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </Grid>
-        <br />
-        {occupancyType == "regular" ? (
-          <div>
-            <h3 align="center">Invoice</h3>
+              <Grid
+                container
+                spacing={1}
+                style={{ paddingLeft: 10, height: 49 }}
+              >
+                <Stack spacing={2} direction="row">
+                  <Grid item xs={6}>
+                    <h4>Security Deposit</h4>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl sx={{ m: 1, minWidth: 190 }}>
+                      <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        value={securityDeposit}
+                        label="Security Depsit"
+                        onChange={handleChangeSecurityDeposit}
+                      >
+                        <MenuItem value={3000}>3000</MenuItem>
+                        <MenuItem value={5000}>5000</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Stack>
+              </Grid>
+              <h3 align="center">Invoice</h3>
             <TableContainer
               style={{
                 backgroundColor: "#1e90ff",
@@ -246,10 +277,20 @@ style={{width: '100%', height: '100%'}}
                 </TableRow>
               </Table>
             </TableContainer>
-          </div>
-        ) : (
-          <div>
-            <h3 align="center">Invoice</h3>
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {occupancyType == "OneMonth" ? (
+            <div style={{ paddingTop: 50 }}>
+              <Tables
+                func={getRow}
+                occupancyType={occupancyType}
+                buildingId={props.buildingId}
+                tableData={monthlyData}
+              />
+              <br/>
+              <h3 align="center">Invoice</h3>
             <TableContainer
               style={{ backgroundColor: "#1e90ff", color: "white" }}
             >
@@ -269,14 +310,98 @@ style={{width: '100%', height: '100%'}}
                 <TableRow>
                   <TableCell align="left">Total</TableCell>
 
-                  <TableCell align="left">{totalRentForMonOrDaily}</TableCell>
+                  <TableCell align="left">{totalRentForOneMonth}</TableCell>
                 </TableRow>
               </Table>
             </TableContainer>
-          </div>
-        )}
-        {/* {(occupancyType==regular)?(setRentAmount(selectedRow+securityDeposit)):(setRentAmount(selectedRow+monthlySec))} */}
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {occupancyType == "daily" ? (
+            <div
+              style={{
+                paddingTop: 50,
+              }}
+            >
+              <Tables
+                func={getRow}
+                occupancyType={occupancyType}
+                buildingId={props.buildingId}
+                tableData={dailyData}
+              />
+              <br />
+              <Grid
+                container
+                spacing={1}
+                style={{ paddingLeft: 10, height: 49 }}
+              >
+                <Stack spacing={2} direction="row">
+                  <Grid item xs={6}>
+                    <h4>Duration</h4>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl sx={{ m: 1, minWidth: 190 }}>
+                      <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        value={duration}
+                        label="Duration"
+                        onChange={handleChange}
+                      >
+                        <MenuItem value={1}>{1}</MenuItem>
+                        <MenuItem value={2}>{2}</MenuItem>
+                        <MenuItem value={3}>{3}</MenuItem>
+                        <MenuItem value={4}>{4}</MenuItem>
+                        <MenuItem value={5}>{5}</MenuItem>
+                        <MenuItem value={6}>{6}</MenuItem>
+                        <MenuItem value={7}>{7}</MenuItem>
+                        <MenuItem value={8}>{8}</MenuItem>
+                        <MenuItem value={9}>{9}</MenuItem>
+                        <MenuItem value={10}>{10}</MenuItem>
+                        <MenuItem value={11}>{11}</MenuItem>
+                        <MenuItem value={12}>{12}</MenuItem>
+                        <MenuItem value={13}>{13}</MenuItem>
+                        <MenuItem value={14}>{14}</MenuItem>
+                        <MenuItem value={15}>{15}</MenuItem>
+
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Stack>
+              </Grid>
+              <h3 align="center">Invoice</h3>
+            <TableContainer
+              style={{ backgroundColor: "#1e90ff", color: "white" }}
+            >
+              <Table aria-label="simple table">
+                <TableRow>
+                  <TableCell align="left">Rent</TableCell>
+
+                  <TableCell align="left">{selectedRow}</TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell align="left">Security Deposit</TableCell>
+
+                  <TableCell align="left">{monthlySec}</TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell align="left">Total</TableCell>
+
+                  <TableCell align="left">{totalRentForDaily}</TableCell>
+                </TableRow>
+              </Table>
+            </TableContainer>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </Grid>
+        <br />
       </Grid>
     </>
   );
 }
+
