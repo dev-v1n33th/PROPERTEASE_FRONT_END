@@ -31,9 +31,9 @@ const useStyles = makeStyles({
   },
 });
 
-const regular = "regular";
+const regular = "Regular";
 const OneMonth = "OneMonth";
-const daily = "daily";
+const daily = "Daily";
 
 let bid = null;
 const INITIAL_FORM_STATE = {
@@ -170,7 +170,7 @@ const GuestLoginForm = (props) => {
   const [rentAmount, setRentAmount] = React.useState({});
   const [occupancyObject, setOccupancyObject] = React.useState({});
   const [occupancyType, setOccupancyType] = React.useState({});
-
+  const [sharing,setSharing]=React.useState(null);
   const [totalRent, setTotalRent] = useState("");
   const getAmount = (data) => {
     console.log("amount" + data.securityDeposit);
@@ -180,9 +180,10 @@ const GuestLoginForm = (props) => {
     setRentAmount(data.defaultRent);
     setOccupancyType(data.occupancyType);
     setDuration(data.duration);
+    setSharing(data.sharing)
   };
   console.log(occupancyType);
-
+  console.log(sharing);
   console.log(regular);
   console.log(rentAmount);
   console.log(secureDepo);
@@ -227,7 +228,7 @@ const GuestLoginForm = (props) => {
   console.log(userBuildingId);
   function securityDepoist() {
     axios
-      .get("guest/getSecurityDepositByOccupencyType/Regular")
+      .get("guest/getSecurityDepositByOccupancyType/Regular")
       .then((rse) => console.log(rse.data.securityDepositAmount));
   }
   useEffect(() => {
@@ -292,9 +293,17 @@ const GuestLoginForm = (props) => {
     bool.map((bed) => setAvailableBeds(bed.beds));
   };
 
+  console.log(availableBeds)
   availableBeds.map((item) => {
-    availableBedsByBuidlingName.push(item.bedId);
+    if(item.sharing == sharing){
+         
+        availableBedsByBuidlingName.push(item.bedId);
+
+
+    }
+    
   });
+  console.log(availableBedsByBuidlingName);
 
   const selectBed = (e) => {
     securityDepoist();
@@ -366,6 +375,7 @@ const GuestLoginForm = (props) => {
   const obj3 = { paymentPurpose: OnBoarding };
   const obj5 = { buildingId: buildId };
   const obj6 = { occupancyType: occupancyType };
+  const obj7={sharing:sharing};
   const amountNeedToPay = (n) => {};
 
   function handleChooseGuestPicture(event) {
@@ -406,7 +416,8 @@ const GuestLoginForm = (props) => {
                   const guestdata2 = Object.assign(guestdata1, obj4);
                   const guestdata3 = Object.assign(guestdata2, obj5);
                   const guestdata4 = Object.assign(guestdata3, obj3);
-                  const guestdata = Object.assign(guestdata4, obj6);
+                  const guestdata5 = Object.assign(guestdata4, obj6);
+                  const guestdata =Object.assign(guestdata5,obj7);
 
                   console.log(guestdata);
                   try {
@@ -450,7 +461,7 @@ const GuestLoginForm = (props) => {
                               // toast.warning(" Picture is Not Uploaded")
                             }
                           } else {
-                            console.log("heeeeeeeeeeeeeeeyyyyyyyyyyyy");
+                            console.log("heeyyyyy");
                           }
                         });
                     } else {
