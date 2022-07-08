@@ -6,7 +6,7 @@ import Radio from "@mui/material/Radio";
 
 
 
-export default function App(props) {
+export default function Tables(props) {
     const rows = props.tableData;
     console.log(rows)
     let radioChecked = [rows[0].id];
@@ -59,7 +59,9 @@ export default function App(props) {
       />
       <div style={{ marginTop: "40px" }}>
         You have selected: {selectedRow[0].sharing} sharing and rent of that room is &#8377; {selectedRow[0].price}
-        {props.func(selectedRow[0].price)}
+        {  
+ 
+        props.func(selectedRow[0])}
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+// import 
+
 import Stack from "@mui/material/Stack";
 import { purple } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
@@ -70,6 +72,11 @@ const BootstrapButton = styled(Button)({
   },
 });
 
+const useStyles=makeStyles(()=>({
+  activeButton:{
+    background:"#0373fc"
+  }
+}))
 export default function CustomizedButtons(props) {
   let totalRentForRegular = 0;
   let totalRentForOneMonth = 0;
@@ -81,7 +88,8 @@ export default function CustomizedButtons(props) {
   const [duration, setDuration] = useState();
   const [occupancyType, setOccupancyType] = useState("");
   const [securityDeposit, setSecurityDeposit] = useState();
-
+  const[sharing,setSharing]=useState();
+  const classes = useStyles();
     useEffect(() => {
       let url = `guest/getRatesByBuildingId/${props.buildingId}/regular`;
       axios
@@ -117,7 +125,17 @@ export default function CustomizedButtons(props) {
               toast.error("Something went wrong🤦‍♂️");
             });
     }, [1]);
-
+    const [activeButton, setActiveButton] = useState();
+    console.log(occupancyType);
+    
+    const clickedButtonHandler = (e) => {
+    console.log(e.target.value);
+    const { name } = e.target.value;
+    setActiveButton(e.target.value);
+    setOccupancyType(e.target.value)
+    };
+    console.log(occupancyType)
+    
 
   const handleChange = (event) => {
     setDuration(event.target.value);
@@ -133,9 +151,11 @@ export default function CustomizedButtons(props) {
   };
 
   const getRow = (data) => {
-    console.log("row" + data);
-    setSelectedRow(data);
+    console.log("row" + data.price);
+    setSelectedRow(data.price);
+    setSharing(data.sharing)
   };
+  console.log(sharing)
 
   //calculating rent amount for total
   const monthlySec = 0;
@@ -148,7 +168,8 @@ export default function CustomizedButtons(props) {
     occupancyType: occupancyType,
     defaultRent: selectedRow,
     securityDeposit: securityDeposit,
-    duration:duration
+    duration:duration,
+    sharing:sharing
   };
   props.func(occupancyObject);
 
@@ -173,11 +194,12 @@ export default function CustomizedButtons(props) {
                 <BootstrapButton
                   variant="contained"
                   disableRipple
-                  value="regular"
+                  value="Regular"
                   style={{width: '100%', height: '100%'}}
-                  onClick={(e) => {
-                    setOccupancyType(e.target.value);
-                  }}
+                  onClick={clickedButtonHandler}
+                  className={
+                    activeButton === "Regular" ? `${classes.activeButton}` : ""
+                  }
                 >
                   Regular
                 </BootstrapButton>
@@ -189,9 +211,10 @@ export default function CustomizedButtons(props) {
                   disableRipple
                   style={{width: '100%', height: '100%'}}
                   value="OneMonth"
-                  onClick={(e) => {
-                    setOccupancyType(e.target.value);
-                  }}
+                  className={
+                    activeButton === "OneMonth" ? `${classes.activeButton}` : ""
+                  }
+                  onClick={clickedButtonHandler}
                 >
                   One Month
                 </BootstrapButton>
@@ -202,9 +225,10 @@ export default function CustomizedButtons(props) {
                   disableRipple
                   style={{width: '100%', height: '100%'}}
                   value="daily"
-                  onClick={(e) => {
-                    setOccupancyType(e.target.value);
-                  }}
+                  className={
+                    activeButton === "daily" ? `${classes.activeButton}` : ""
+                  }
+                  onClick={clickedButtonHandler}
                 >
                   Daily
                 </BootstrapButton>
@@ -214,7 +238,7 @@ export default function CustomizedButtons(props) {
         </Grid>
 
         <Grid item xs={12}>
-          {occupancyType == "regular" ? (
+          {occupancyType == "Regular" ? (
             <div style={{ width: "100%", paddingTop: 50 }}>
 
               <Tables
@@ -404,4 +428,3 @@ export default function CustomizedButtons(props) {
     </>
   );
 }
-

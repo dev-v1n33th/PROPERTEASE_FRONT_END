@@ -40,7 +40,7 @@ function ActregGuestDetails(props) {
         createData(<h4>Occupancy Type</h4>, props.guestdetails.occupancyType),
       ];
       const rows1=[
-        createData(<h4>Check-in Date</h4>, props.guestdetails.checkInDate),
+        // createData(<h4>Check-in Date</h4>, props.guestdetails.checkInDate),
         createData(<h4>Current Due Amount</h4>, 'Rs.'+props.GuestDueAmount),
         createData(<h4>Security Deposit</h4>,'Rs.'+ props.guestdetails.securityDeposit ),
         createData(<h4>Default Rent</h4>,'Rs.'+ props.guestdetails.defaultRent ),

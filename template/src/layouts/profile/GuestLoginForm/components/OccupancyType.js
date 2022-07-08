@@ -1,7 +1,7 @@
 
 const Occupancytype = {
   "Daily":"Daily",
-  "Monthly":"Monthly",
+  "OneMonth":"OneMonth",
   "Regular":"Regular"
 }
 export default Occupancytype;
